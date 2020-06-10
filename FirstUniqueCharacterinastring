@@ -1,0 +1,22 @@
+class Solution {
+    public int firstUniqChar(String s) {
+        
+        //Create HashMap
+        HashMap<Character,Integer> hm = new HashMap<>();
+        
+        //Iterate over string and store in HashMap
+        for(char ch:s.toCharArray())
+            hm.put(ch,hm.getOrDefault(ch,0) + 1);
+        char[] ch = s.toCharArray();
+        
+        //Iterate over string to find first non repeated and check count in HashMap
+        for(int i=0;i<s.length();i++)
+        {
+            if(hm.get(ch[i]) == 1)
+                return i;
+        }
+        return -1;
+        
+        
+    }
+}
