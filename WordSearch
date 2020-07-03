@@ -1,0 +1,36 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        
+        int nr = board.length;
+        int nc = board[0].length;
+        int wi=0;
+      
+        for(int i=0;i<nr;i++)
+        {
+            for(int j=0;j<nc;j++)
+            {
+                if(board[i][j] == word.charAt(0) && dfs(board,word,i,j,0,nr,nc,new HashSet<Integer>()))
+                    return true;
+            }
+        }
+        
+        return false;
+        
+    }
+    
+    public boolean dfs(char[][] board,String word,int i,int j,int wi,int nr,int nc,Set<Integer> visited)
+    {
+        if(wi >= word.length())
+            return true;
+        if(i< 0 || i>= nr  || j<0 || j>=nc || visited.contains(i*nc+j))
+             return false;
+        if(board[i][j] != word.charAt(wi))
+             return false;
+          visited.add(i*nc+j);
+        return (dfs(board,word,i+1,j,wi+1,nr,nc,new HashSet<Integer>(visited))) ||
+             (dfs(board,word,i-1,j,wi+1,nr,nc,new HashSet<Integer>(visited))) || 
+            (dfs(board,word,i,j+1,wi+1,nr,nc,new HashSet<Integer>(visited))) ||
+            (dfs(board,word,i,j-1,wi+1,nr,nc,new HashSet<Integer>(visited))) ;
+        }
+    
+}
