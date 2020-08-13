@@ -1,0 +1,54 @@
+/*
+// Definition for an Interval.
+class Interval {
+    public int start;
+    public int end;
+
+    public Interval() {}
+
+    public Interval(int _start, int _end) {
+        start = _start;
+        end = _end;
+    }
+};
+*/
+
+class StartComparator implements Comparator<Interval>{  
+public int compare(Interval i1,Interval i2){  
+return i1.start-i2.start;  
+}  
+    
+}  
+class Solution {
+    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+        List<Interval> timings = new ArrayList<>();
+        List<Interval> result = new ArrayList<>();
+        
+        for(List<Interval> list : schedule)
+        {
+            for(Interval interval : list)
+                timings.add(interval);
+        }
+        
+        Collections.sort(timings,new StartComparator());  
+        
+        
+        int endtime = timings.get(0).end;
+        for(int i=1;i<timings.size();i++)
+        {
+            if( endtime < timings.get(i).start)
+            {
+                result.add(new Interval(endtime,timings.get(i).start));
+                endtime = timings.get(i).end;
+                
+            }
+            else
+            {
+                if(endtime < timings.get(i).end)
+                    endtime = timings.get(i).end;
+            }
+        }
+        
+        return result;
+    }
+}
