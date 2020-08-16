@@ -1,0 +1,27 @@
+
+https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/179/
+class Solution {
+    public boolean isValid(String s) {
+        if(s == null || s.length() == 0)
+            return true;
+        Stack<Character> brackets = new Stack<>();
+        for(char ch : s.toCharArray())
+        {
+            if(ch =='[')
+                brackets.push(']');
+            else if (ch == '{')
+                brackets.push('}');
+              else if (ch == '(')
+                brackets.push(')');
+            else
+            {
+                if(brackets.isEmpty() || brackets.pop() != ch )
+                    return false;
+                    
+            }
+        }
+        
+        return brackets.isEmpty();
+        
+    }
+}
