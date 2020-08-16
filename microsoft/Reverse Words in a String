@@ -1,5 +1,62 @@
 https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/166/
 
+soln: without using any built in function:
+class Solution {
+    
+    public String reverseWords(String s) {
+       
+        char ch[] = s.toCharArray();
+		 
+		 //reverse the string
+		 reverse(ch,0,ch.length-1);
+		 
+		//reverse the words
+		reverseWords(ch);
+		 
+		 //remove spaces
+		 int end = removespaces(ch);
+         return String.valueOf(ch,0,end);
+}
+    public void reverse(char[] words,int l,int r)
+	{
+	while(l<r)
+    {
+        char tmp = words[l];
+        words[l++] = words[r];
+        words[r--] = tmp;
+    }
+	}
+	
+	public void reverseWords(char[] words) {
+       
+		int i=0,j=0,len=words.length;
+		while(j<len)
+		{
+			while(j<len && words[j] == ' ')
+				j++;
+			i=j;
+			while(j<len && words[j] !=' ')
+				j++;
+			reverse(words,i,j-1);
+		}
+    }
+
+private int removespaces(char[] ch) {
+		// TODO Auto-generated method stub
+		int i=0,len=ch.length,j=0;
+		while(j<len)
+		{
+			while(j<len && ch[j] ==  ' ')
+				j++;
+			while(j<len && ch[j] != ' ')
+				ch[i++] = ch[j++];
+            while(j<len && ch[j] ==  ' ')
+				j++;
+			if(j< len ) ch[i++] = ' ';
+		}
+		return i;
+	}}
+
 sol1:
 class Solution {
     public String reverseWords(String s) {
