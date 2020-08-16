@@ -1,0 +1,154 @@
+https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/166/
+
+sol1:
+class Solution {
+    public String reverseWords(String s) {
+        if(s == null || s.trim().length() == 0)
+            return "";
+        String[] words = s.trim().split("\\s+");
+        int l=0,r=words.length-1;
+        while(l<r)
+        {
+            String tmp = words[l];
+            words[l++] = words[r];
+            words[r--] = tmp;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(words[0]);
+        for(int i=1;i<words.length;i++)
+        sb.append(" " + words[i]);
+        return sb.toString();
+    }
+}
+
+Sol1 Modified:
+class Solution {
+  public String reverseWords(String s) {
+    // remove leading spaces
+    s = s.trim();
+    // split by multiple spaces
+    List<String> wordList = Arrays.asList(s.split("\\s+"));
+    Collections.reverse(wordList);
+    return String.join(" ", wordList);
+  }
+}
+
+sol2:
+class Solution {
+    public void reverse(char[] ch,int l,int r)
+    {
+        while(l<r)
+        {
+            char tmp = ch[l];
+            ch[l++] = ch[r];
+            ch[r--] = tmp;
+        }
+    }
+    public String reverseWords(String s) {
+        if(s == null || s.trim().length() == 0)
+            return "";
+        char ch[] = s.trim().toCharArray();
+        reverse(ch,0,ch.length-1);
+        int l=-1,r=0;
+        while(r < ch.length)
+        {
+            while(ch[r] == ' ')
+                r++;
+            l=r;
+            while(r < ch.length && ch[r] != ' ')
+                r++;
+            reverse(ch,l,r-1);
+        }
+        
+        l=-1;r=0;
+        while(r < ch.length)
+        {
+            while(ch[r] == ' ')
+                r++;
+            while(r < ch.length && ch[r] != ' ')
+                ch[++l] = ch[r++];
+          if(r<ch.length && l+1 < ch.length) ch[++l] = ' ';
+        }
+        return String.valueOf(ch,0,l+1);
+}
+}
+
+sol2 by leetcode:
+class Solution {
+  public String reverseWords(String s) {
+    int left = 0, right = s.length() - 1;
+    // remove leading spaces
+    while (left <= right && s.charAt(left) == ' ') ++left;
+
+    // remove trailing spaces
+    while (left <= right && s.charAt(right) == ' ') --right;
+
+    Deque<String> d = new ArrayDeque();
+    StringBuilder word = new StringBuilder();
+    // push word by word in front of deque
+    while (left <= right) {
+      char c = s.charAt(left);
+
+      if ((word.length() != 0) && (c == ' ')) {
+        d.offerFirst(word.toString());
+        word.setLength(0);
+      } else if (c != ' ') {
+        word.append(c);
+      }
+      ++left;
+    }
+    d.offerFirst(word.toString());
+
+    return String.join(" ", d);
+  }
+}
+
+sol3:
+class Solution {
+  
+    public String reverseWords(String s) {
+    Stack<String> stack = new Stack<>();
+     String[] words = s.trim().split("\\s+");
+     for(String word:words)
+         stack.add(word);
+    StringBuilder sb = new StringBuilder();
+      while(!stack.isEmpty())
+      {
+          sb.append(stack.pop());
+          if(!stack.isEmpty())
+              sb.append(" ");
+      }
+        return sb.toString();
+}
+}
+
+sol3 by leetcode:
+class Solution {
+  public String reverseWords(String s) {
+    int left = 0, right = s.length() - 1;
+    // remove leading spaces
+    while (left <= right && s.charAt(left) == ' ') ++left;
+
+    // remove trailing spaces
+    while (left <= right && s.charAt(right) == ' ') --right;
+
+    Deque<String> d = new ArrayDeque();
+    StringBuilder word = new StringBuilder();
+    // push word by word in front of deque
+    while (left <= right) {
+      char c = s.charAt(left);
+
+      if ((word.length() != 0) && (c == ' ')) {
+        d.offerFirst(word.toString());
+        word.setLength(0);
+      } else if (c != ' ') {
+        word.append(c);
+      }
+      ++left;
+    }
+    d.offerFirst(word.toString());
+
+    return String.join(" ", d);
+  }
+}
