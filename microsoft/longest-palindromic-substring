@@ -76,3 +76,29 @@ class Solution {
 Time Complexity: 0(n2)
 
 Dynamic Programming Approach:
+
+public String longestPalindrome(String s) {
+        if(s == null || s.length() < 2)
+            return s;
+        int len = s.length();
+        boolean dp[][] = new boolean[len][len];
+        int sindex =0,eindex=0;
+        
+        for(int i=0;i<len;i++)
+        {
+            for(int j=0;j+i < len;j++)
+            {
+                
+                dp[j][j+i] = (s.charAt(j) == s.charAt(j+i)) && (i < 2 || dp[j+1][j+i-1]);
+                if(dp[j][j+i])
+                {
+                    sindex = j;
+                    eindex = j+i;
+                }
+                
+              } 
+        }
+        return s.substring(sindex,eindex+1);
+     }
+
+Base idea: https://www.youtube.com/watch?v=UflHuQj6MVA
