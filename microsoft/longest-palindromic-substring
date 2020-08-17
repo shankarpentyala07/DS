@@ -1,0 +1,78 @@
+BruteForceApproach:
+https://leetcode.com/problems/longest-palindromic-substring
+class Solution {
+    public boolean isPalindorme(char[] ch,int l,int r)
+    {
+        while(l<r)
+        {
+            if(ch[l++] != ch[r--])
+                return false;
+        }
+        return true;
+    }
+    public String longestPalindrome(String s) {
+        int len =s.length();
+        if( len == 0 || len == 1)
+            return s;
+        char[] ch = s.toCharArray();
+        int maxlen = 1;
+        int minindex=0,maxindex=0;
+        for(int i=0;i<len;i++)
+        {
+            for(int j=i+1;j<len;j++)
+            {
+                if(isPalindorme(ch,i,j))
+                    if(j-i+1 > maxlen)
+                    {
+                        maxlen = j-i+1;
+                        minindex =i;
+                        maxindex = j;
+                    }
+            }
+                
+        }
+        
+        return s.substring(minindex,maxindex+1);
+        
+        
+    }
+}
+Time Complexity : 0(n3)
+Space Complexity: 0(n)
+
+ExpandFromMiddle Approach:
+class Solution {
+    public String longestPalindrome(String s) {
+        if(s == null || s.length() < 2)
+            return s;
+        int slen = s.length();
+        int start=0,end=0;
+        for(int i=0;i<slen;i++)
+        {
+            int len1 = expandFromMiddle(s,i,i);
+            int len2 = expandFromMiddle(s,i,i+1);
+            int len = len1 > len2 ? len1 : len2;
+            if( len > end-start)
+            {
+                start = i - (len-1) / 2;
+                end = i + len / 2;
+            }
+        }
+        
+        return s.substring(start,end+1);
+        
+    }
+    
+    public int expandFromMiddle(String s,int l,int r)
+    {
+        while(l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r))
+        {
+            l--;
+            r++;
+        }
+        return r-l-1;
+    }
+}
+Time Complexity: 0(n2)
+
+Dynamic Programming Approach:
