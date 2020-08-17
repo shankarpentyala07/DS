@@ -1,0 +1,33 @@
+https://leetcode.com/problems/group-anagrams/
+Approach 1: Categorize by Sorted String
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List> hm = new HashMap<>();
+        for(String word : strs)
+        {
+            char[] wordA = word.toCharArray();
+            Arrays.sort(wordA);
+            String sword = String.valueOf(wordA);
+            if(!hm.containsKey(sword))
+                   hm.put(sword,new ArrayList<>());
+            hm.get(sword).add(word);
+        
+        }
+        return new ArrayList(hm.values());
+        
+    }
+}
+
+Sol2: Instead of sorting, we can also build the key string in this way
+public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs == null || strs.length == 0) return new ArrayList<>();
+        Map<String, List<String>> map = new HashMap<>();
+        for (String s : strs) {
+            char[] ca = new char[26];
+            for (char c : s.toCharArray()) ca[c - 'a']++;
+            String keyStr = String.valueOf(ca);
+            if (!map.containsKey(keyStr)) map.put(keyStr, new ArrayList<>());
+            map.get(keyStr).add(s);
+        }
+        return new ArrayList<>(map.values());
+    }
