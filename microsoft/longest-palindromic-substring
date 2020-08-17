@@ -1,5 +1,6 @@
 BruteForceApproach:
 https://leetcode.com/problems/longest-palindromic-substring
+My solution Link DP : https://leetcode.com/problems/longest-palindromic-substring/discuss/797542/Java-Solution-DP-clear-approach
 class Solution {
     public boolean isPalindorme(char[] ch,int l,int r)
     {
