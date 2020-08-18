@@ -1,7 +1,10 @@
 https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/211/
+
 https://leetcode.com/problems/trapping-rain-water/solution/
+
 Solution1:
-From that particular index,find the lefmax,find the rightmax and min of them subtracted from the current index is the water trapped there
+From that particular index,find the lefmax,find the rightmax and min of them subtracted from the current index is the water trapped there:
+```
 class Solution {
     public int trap(int[] height) {
     
@@ -22,9 +25,11 @@ class Solution {
         
     }
 }
+```
 
 solution2: Dynamic programming(Calculate leftmax andd rightmax arrays) 
 Time: O(n) Space: O(n)
+```
 class Solution {
     public int trap(int[] height) {
         if(height == null || height.length == 0)
@@ -51,8 +56,9 @@ class Solution {
         
     }
 }
-
+```
 Solution3: Two pointer Approach:
+```
 class Solution {
     public int trap(int[] height) {
         if(height == null || height.length == 0)
@@ -80,11 +86,11 @@ class Solution {
         return total;
     }
 }
-
+```
 Why it works?
 a little bit explanation about the 4th solution: Let's assume left,right,leftMax,rightMax are in positions shown in the graph below.
 (https://github.com/shankarpentyala07/DS/blob/master/microsoft/Screen%20Shot%202020-08-18%20at%203.58.13%20PM.png)
-(https://lh3.googleusercontent.com/zwVtfosuJfjXq2O1Mw2-e35ocQ42Bk2LN_cSazuy5Duvz6V1kTLWNgtwwRxoT3i4p1SLkw=s170)
+
 we can see height[left] < height[right],then for pointerleft, he knows a taller bar exists on his right side, then if leftMax is taller than him, he can contain some water for sure(in our case). So we go ans += (left_max - height[left]). But if leftMax is shorter than him, then there isn't a left side bar can help him contain water, then he will become other bars' leftMax. so execute (left_max = height[left]).
 Same idea for right part.
 add some comments to the code above.
