@@ -89,7 +89,8 @@ class Solution {
 ```
 Why it works?
 a little bit explanation about the 4th solution: Let's assume left,right,leftMax,rightMax are in positions shown in the graph below.
-(https://github.com/shankarpentyala07/DS/blob/master/microsoft/Screen%20Shot%202020-08-18%20at%203.58.13%20PM.png)
+
+![image](https://github.com/shankarpentyala07/DS/blob/master/microsoft/Screen%20Shot%202020-08-18%20at%203.58.13%20PM.png)
 
 we can see height[left] < height[right],then for pointerleft, he knows a taller bar exists on his right side, then if leftMax is taller than him, he can contain some water for sure(in our case). So we go ans += (left_max - height[left]). But if leftMax is shorter than him, then there isn't a left side bar can help him contain water, then he will become other bars' leftMax. so execute (left_max = height[left]).
 Same idea for right part.
