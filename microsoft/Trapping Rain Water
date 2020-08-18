@@ -1,0 +1,23 @@
+https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/211/
+Solution1:
+From that particular index,find the lefmax,find the rightmax and min of them subtracted from the current index is the water trapped there
+class Solution {
+    public int trap(int[] height) {
+    
+        int len = height.length;
+        int leftmax,rightmax,total=0;
+        for(int i=0;i<len-1;i++)
+        {
+            leftmax = height[i];
+            for(int j=i-1;j>=0;j--)
+                leftmax = Math.max(leftmax,height[j]);
+            rightmax = height[i];
+               for(int j=i+1;j<len;j++)
+                   rightmax = Math.max(rightmax,height[j]);
+            total += Math.min(leftmax,rightmax) - height[i];
+            
+        }
+        return total;
+        
+    }
+}
