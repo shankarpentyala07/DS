@@ -94,4 +94,4 @@ a little bit explanation about the 4th solution: Let's assume left,right,leftMax
 
 we can see height[left] < height[right],then for pointerleft, he knows a taller bar exists on his right side, then if leftMax is taller than him, he can contain some water for sure(in our case). So we go ans += (left_max - height[left]). But if leftMax is shorter than him, then there isn't a left side bar can help him contain water, then he will become other bars' leftMax. so execute (left_max = height[left]).
 Same idea for right part.
-add some comments to the code above.
+add some comments to the code above. 
