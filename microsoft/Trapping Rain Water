@@ -22,3 +22,32 @@ class Solution {
         
     }
 }
+
+solution2: Dynamic programming(Calculate leftmax andd rightmax arrays) 
+Time: O(n) Space: O(n)
+class Solution {
+    public int trap(int[] height) {
+        if(height == null || height.length == 0)
+            return 0;
+        int len = height.length;
+        int[] leftmax = new int[len];
+        int[] rightmax = new int[len];
+        leftmax[0]=height[0];
+        rightmax[len-1]=height[len-1];
+        int total=0;
+        
+        for(int i=1;i<len;i++)
+            leftmax[i] = Math.max(height[i],leftmax[i-1]);
+        
+        for(int i=len-2;i>=0;i--)
+            rightmax[i] = Math.max(rightmax[i+1],height[i]);
+            
+        for(int i=1;i<len-1;i++)
+        {
+            total += (Math.min(leftmax[i],rightmax[i]) - height[i]);
+            
+        }
+        return total;
+        
+    }
+}
