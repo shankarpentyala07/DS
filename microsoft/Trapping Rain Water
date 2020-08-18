@@ -1,4 +1,5 @@
 https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/211/
+https://leetcode.com/problems/trapping-rain-water/solution/
 Solution1:
 From that particular index,find the lefmax,find the rightmax and min of them subtracted from the current index is the water trapped there
 class Solution {
