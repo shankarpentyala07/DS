@@ -1,0 +1,53 @@
+https://leetcode.com/explore/interview/card/microsoft/32/linked-list/205/
+
+Solution: (Using Two Stacks)
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1 == null && l2 == null)
+            return l1;
+        Stack<Integer> l1val = new Stack<>();
+        Stack<Integer> l2val = new Stack<>();
+        while(l1 != null){
+            l1val.push(l1.val);
+            l1 = l1.next;
+        }
+        
+        while(l2 != null){
+            l2val.push(l2.val);
+            l2 = l2.next;
+        }
+
+
+        int sum=0;
+        ListNode head = null;
+        while(!(l1val.isEmpty()) || !(l2val.isEmpty())){
+            
+            sum = (l1val.isEmpty()?0:l1val.pop()) + (l2val.isEmpty()?0:l2val.pop()) + sum;
+            
+            ListNode tmp = new ListNode(sum % 10);
+            tmp.next = head;
+            head = tmp;  
+            sum = sum/10;
+        }
+        
+        if(sum != 0)
+        {
+           ListNode tmp = new ListNode(sum); 
+           tmp.next = head;
+           head = tmp; 
+        }
+        
+        return head;
+        
+    }
+}
