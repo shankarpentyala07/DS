@@ -1,0 +1,38 @@
+https://leetcode.com/explore/interview/card/microsoft/32/linked-list/209/
+
+Solution1: (using Priority Queue)
+
+class Solution {
+   
+     public ListNode mergeKLists(ListNode[] lists) {
+        ListNode dummy = new ListNode(-1);
+        if(lists == null || lists.length == 0)
+            return dummy.next;
+        
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>(){
+            public int compare(ListNode l1,ListNode l2){
+                return l1.val-l2.val;
+        }
+        });
+        
+        ListNode curr = dummy;
+        for(ListNode list:lists)
+        {
+            if(list!= null)
+                pq.add(list);
+        }
+        
+        while(!pq.isEmpty())
+        {
+            curr.next = pq.remove();
+            curr = curr.next;
+            if(curr.next != null)
+                pq.add(curr.next);   
+        }
+        return dummy.next; 
+    }
+}
+
+TimeComplexity : O(Nlog(K)) N - Total number of elements in the result list
+k - Size of input list
+Space Complexity: O(K)
