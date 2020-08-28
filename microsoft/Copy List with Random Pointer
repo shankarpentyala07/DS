@@ -1,0 +1,87 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+1. Iterative Solution with HashMap
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null)
+            return head;
+        
+        Node dummy = new Node(-1);
+        Node curr = head;
+        Node newHead = dummy;
+        HashMap<Node,Node> mapping = new HashMap<>();
+        //create new list
+        while(curr != null)
+        {
+            newHead.next= new Node(curr.val);
+            mapping.put(curr,newHead.next);
+            curr = curr.next;
+            newHead = newHead.next;
+        }
+        
+        curr=head;newHead=dummy.next;
+        //Generate Random Pointers
+        while(curr != null)
+        {
+            newHead.random = mapping.get(curr.random);
+            curr = curr.next;
+            newHead = newHead.next;
+        }
+        
+        return dummy.next;
+        
+    }
+}
+
+2.Solution using o(1) space:
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null)
+            return head;
+        
+    //create clone:(1->1'->2->2'->3->3'->4->4')
+        Node original = head;
+        while(original != null)
+        {
+            Node tmp = original.next;
+            original.next = new Node(original.val);
+            original.next.next = tmp;
+            original = tmp;
+        }
+        
+        //Assign Random pointers to clone
+        original = head;
+        while(original != null){
+            if(original.random != null)
+                original.next.random = original.random.next;
+            original = original.next.next;
+        }
+        
+        //Seperating Original & clone pointers
+        original = head;
+        Node cloned = original.next;
+        Node newHead = cloned;
+        
+        while(original != null){
+            original.next = cloned.next;
+            if(original.next != null)
+               cloned.next = original.next.next;
+            original = original.next;
+            cloned = cloned.next;
+        }
+        
+        return newHead;
+    }
+}
