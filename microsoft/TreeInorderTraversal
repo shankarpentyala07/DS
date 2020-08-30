@@ -16,6 +16,23 @@ public List<Integer> inorderTraversal(TreeNode root) {
     return list;
 }
 
+Recursive Approach:
+class Solution {
+    public void inorderTraversal(TreeNode root,List<Integer> result)
+    {
+        if(root == null)
+            return;
+         inorderTraversal(root.left,result);
+        result.add(root.val);
+        inorderTraversal(root.right,result);    
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+      inorderTraversal(root,result);
+        return result;  
+    }    
+}
+
 Iterative Approach 2:
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
