@@ -1,0 +1,52 @@
+Iterative Approach 1:
+
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<>();
+    if(root == null) return list;
+    Stack<TreeNode> stack = new Stack<>();
+    while(root != null || !stack.empty()){
+        while(root != null){
+            stack.push(root);
+            root = root.left;
+        }
+        root = stack.pop();
+        list.add(root.val);
+        root = root.right;
+    }
+    return list;
+}
+
+Iterative Approach 2:
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if(root == null)
+            return result;
+        Stack<TreeNode> nodes = new Stack<>();
+        nodes.push(root);
+        while(!nodes.isEmpty()){
+            //Left 
+            while(root!= null)
+            {
+                if(root.left != null){
+                nodes.push(root.left);
+                }
+                root = root.left;
+            }
+            
+            //Node
+            root = nodes.pop();
+            result.add(root.val);
+            
+            //Right
+            
+            if (root.right != null) {
+                nodes.push(root.right);
+            }
+            root = root.right;
+            
+            
+        }
+        return result;
+    }
+}
