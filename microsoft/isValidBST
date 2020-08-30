@@ -1,0 +1,65 @@
+https://leetcode.com/problems/validate-binary-search-tree/
+
+Solution1: using int primitive values and flags
+class Solution {
+    public boolean isValidBST(TreeNode node,int left,boolean leftset,int right,boolean rightset)
+    {
+        if(node == null)
+            return true;
+        if((leftset && left >= node.val) || (rightset && right <= node.val))
+            return false;
+        return isValidBST(node.left,left,leftset,node.val,true) && isValidBST(node.right,node.val,true,right,rightset);
+    }
+    public boolean isValidBST(TreeNode root) {
+        if(root == null)
+            return true;
+        return isValidBST(root,Integer.MIN_VALUE,false,Integer.MAX_VALUE,false);
+        
+    }
+}
+
+solution2: Using Integer objects(Easy-Peezy)
+class Solution {
+    public boolean isValidBST(TreeNode node,Integer left,Integer right)
+    {
+        if(node == null)
+            return true;
+        if((left != null && left >= node.val) || (right != null && right <= node.val))
+            return false;
+        return isValidBST(node.left,left,node.val) && isValidBST(node.right,node.val,right);
+    }
+    public boolean isValidBST(TreeNode root) {
+        if(root == null)
+            return true;
+        return isValidBST(root,null,null);
+        
+    }
+}
+
+Solution3: (Inorder Recursive Approach)
+ class Solution {
+     Integer prev = null;
+    public boolean isValidBST(TreeNode root) {
+        if (root == null)
+              return true;
+        
+        if (!isValidBST(root.left))
+             return false;
+        
+        if (prev != null && (root.val <=prev))
+           return false;
+        
+         prev =root.val;
+            
+        if (!isValidBST(root.right))
+        return false;
+        
+return true;
+    }
+}
+
+Solution4: Inorder Iterative Approach:
+
+
+
+
