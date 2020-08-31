@@ -1,0 +1,28 @@
+https://leetcode.com/explore/interview/card/microsoft/31/trees-and-graphs/192/
+
+Solution:
+
+class Solution {
+    public Node connect(Node root) {
+        
+        if(root == null)
+            return root;
+        Queue<Node> outer = new LinkedList<>();
+        outer.add(root);
+        while(!outer.isEmpty())
+        {
+            int size = outer.size();
+            while(size-- > 0){
+            Node curr = outer.remove();
+            if(size > 0)   
+              curr.next = outer.peek();
+            if(curr.left != null)
+                outer.add(curr.left);
+            if(curr.right != null)
+                outer.add(curr.right);
+            }
+        }
+        return root;
+        
+    }
+}
