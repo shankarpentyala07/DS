@@ -1,0 +1,60 @@
+https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/
+
+Iterative Approach:
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(root == null)
+            return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int level=0;
+        while(!queue.isEmpty())
+        {
+            int size = queue.size();
+            List<Integer> curr = new ArrayList<>();
+            while(size--  > 0)
+            {
+                TreeNode node = queue.remove();
+                curr.add(node.val);
+                if(node.left != null)
+                    queue.add(node.left);
+                if(node.right != null)
+                    queue.add(node.right);
+            }
+            
+            if(level % 2 != 0)
+                Collections.reverse(curr);
+            result.add(curr);
+            level++;
+        }
+        
+        return result;
+    }
+}
+
+Recursive Approach:
+class Solution {
+    public void zigzagLevelOrder(TreeNode root,int level,List<List<Integer>> result)
+    {
+        if(root == null)
+            return;
+        if(result.size() == level)
+            result.add(new ArrayList<>());
+        
+        if(level % 2 == 0)
+            result.get(level).add(root.val);
+        else
+            result.get(level).add(0,root.val);
+        
+        zigzagLevelOrder(root.left,level+1,result);
+        zigzagLevelOrder(root.right,level+1,result);
+    }
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(root == null)
+            return result;
+        zigzagLevelOrder(root,0,result);
+        return result;
+    }
+}
