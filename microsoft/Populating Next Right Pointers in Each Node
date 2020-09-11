@@ -1,6 +1,6 @@
 https://leetcode.com/explore/interview/card/microsoft/31/trees-and-graphs/192/
 
-Solution:
+Solution1 (Queue) :
 
 class Solution {
     public Node connect(Node root) {
@@ -26,3 +26,27 @@ class Solution {
         
     }
 }
+
+Solution2: (Space o(1) solution)
+
+class Solution {
+    public Node connect(Node root) {
+        if(root == null)
+            return root;
+        Node currHead = root;
+        while(currHead != null && currHead.left != null)
+        {
+            Node curr = currHead;
+            while( curr != null)
+            {
+                curr.left.next = curr.right;
+                curr.right.next = curr.next != null ? curr.next.left: null;
+                curr = curr.next;
+            }
+            currHead = currHead.left;
+        }
+        
+        return root;
+        
+    }
+} 
