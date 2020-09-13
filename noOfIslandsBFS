@@ -43,3 +43,59 @@ class Solution {
     return num_islands;
   }
 }
+
+Sol2: (Without Modifyng input array)
+class Solution {
+    
+    public void numIslands(char[][] grid,Queue<Integer> queue,Set<Integer> visited,int nr,int nc)
+    {
+        int[][] directions = {{0,1},{0,-1},{1,0},{-1,0}};
+        while(!queue.isEmpty())
+        {
+            int idx = queue.remove();
+            int row = idx/ nc;
+            int col = idx % nc;
+           for(int[] d : directions)
+            {
+                int nRow = row + d[0];
+                int nCol = col + d[1];
+                
+                if(nRow >= 0 && nRow < nr && nCol >=0 && nCol < nc && grid[nRow][nCol] == '1' && !visited.contains(nRow*nc+nCol)){
+                   queue.add(nRow*nc+nCol);
+                 visited.add(nRow*nc+nCol);
+                }
+            }
+            
+            
+        }
+    }
+    
+    
+    public int numIslands(char[][] grid) {
+        
+        if(grid == null || grid.length == 0)
+            return 0;
+        
+        int count = 0;
+        
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        int nr=grid.length,nc=grid[0].length;
+        
+        for(int i=0;i < nr;i++)
+        {
+            for(int j=0;j<nc;j++)
+            {
+                if(grid[i][j] == '1' && !visited.contains(i*nc+j))
+                {
+                    count++;
+                    queue.add(i*nc+j);
+                    visited.add(i*nc+j);
+                    numIslands(grid,queue,visited,nr,nc);
+                }
+            }
+        }
+        
+        return count;
+    }
+}
