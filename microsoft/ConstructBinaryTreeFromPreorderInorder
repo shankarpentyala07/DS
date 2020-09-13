@@ -27,3 +27,28 @@ class Solution {
 
 Time: O(N)
 Space: 0(N)
+
+Solution2: (Caalculating preorder Index Locally)
+
+class Solution {
+    Map<Integer,Integer> cache = new HashMap<>();   
+    public TreeNode buildTree(int[] preorder,int preIdx,int[] inorder,int inStart,int inEnd)
+    {
+        if(inStart > inEnd)
+            return null;
+        
+        TreeNode root = new TreeNode(preorder[preIdx]);
+        int inIndex = cache.get(preorder[preIdx]);
+        root.left = buildTree(preorder,preIdx+1,inorder,inStart,inIndex-1);
+        root.right = buildTree(preorder,preIdx + inIndex - inStart + 1,inorder,inIndex+1,inEnd);
+        return root;
+        
+        
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int idx = 0;
+        for(int val:inorder)
+            cache.put(val,idx++);
+       return buildTree(preorder,0,inorder,0,inorder.length-1);
+    }
+}
