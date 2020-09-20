@@ -81,3 +81,40 @@ private List<String> expand(List<String> l,char[] arr)
     return next;
 }
 }
+
+Sol2 Modified:
+class Solution {
+        Map<String,String> hm = new HashMap<>(){{
+        put("2","abc");
+        put("3","def");
+        put("4","ghi");
+        put("5","jkl");
+        put("6","mno");
+        put("7","pqrs");
+        put("8","tuv");
+        put("9","wxyz");
+    }};
+    
+    List<String> res = new ArrayList<>();
+    public List<String> letterCombinations(String digits) {
+        
+        if(digits ==null || digits.length() == 0)
+            return res;
+        
+        res.add("");
+        for(int i=0;i<digits.length();i++)
+        {
+             String map = hm.get(digits.charAt(i)+"");
+             int len = res.size();
+            while(len-- > 0){
+             String tmp = res.remove(0);
+            for(char ch : map.toCharArray())
+                res.add(tmp + ch);
+            }
+            
+        }
+        
+        return res;
+        
+    }
+}
