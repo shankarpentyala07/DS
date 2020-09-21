@@ -39,3 +39,92 @@ class FreqStack {
 
 Time Complexity : 0(1) for both push/pop
 Space Complexity : 0(n) n = no of elements in freq stack
+
+Solution2: (priority Queue + HashMap) (Comparator in priority Queue is implemented as lambda exp)
+
+class FreqStack {
+    Map<Integer,Integer> count;
+    PriorityQueue<Node> pq;
+    int idx;
+    public FreqStack() {
+        count = new HashMap<>();
+        pq = new PriorityQueue<>((n1,n2) -> (n1.freq == n2.freq?n2.idx-n1.idx:n2.freq-n1.freq));
+        idx=0;
+    }
+    
+    public void push(int x) {
+        int freq = count.getOrDefault(x,0);
+        count.put(x,freq+1);
+        pq.add(new Node(x,freq+1,++idx));
+    }
+    
+    public int pop() {
+        
+        int res = pq.remove().val;
+         count.put(res,count.get(res)-1);
+        return res;
+    }
+    
+    class Node{
+        int val;
+        int freq;
+        int idx;
+        Node()
+        {}
+        Node(int val,int freq,int idx)
+        {
+            this.val = val;
+            this.freq = freq;
+            this.idx = idx;
+            
+        }
+
+    }
+}
+Solution3 :(Same as soln2 ,otherway of implementing comparator as a seperate class)
+
+class FreqStack {
+    Map<Integer,Integer> count;
+    PriorityQueue<Node> pq;
+    int idx;
+    public FreqStack() {
+        count = new HashMap<>();
+        pq = new PriorityQueue<>(new NodeComparator());
+        idx=0;
+    }
+    
+    public void push(int x) {
+        int freq = count.getOrDefault(x,0);
+        count.put(x,freq+1);
+        pq.add(new Node(x,freq+1,++idx));
+    }
+    
+    public int pop() {
+        
+        int res = pq.remove().val;
+         count.put(res,count.get(res)-1);
+        return res;
+    }
+    
+    class Node{
+        int val;
+        int freq;
+        int idx;
+        Node()
+        {}
+        Node(int val,int freq,int idx)
+        {
+            this.val = val;
+            this.freq = freq;
+            this.idx = idx;
+            
+        }
+
+    }
+    
+    class NodeComparator implements Comparator<Node>{
+        public int compare(Node n1,Node n2){
+            return n1.freq==n2.freq?n2.idx-n1.idx:n2.freq-n1.freq;
+        }
+    }
+}
