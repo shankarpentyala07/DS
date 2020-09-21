@@ -1,0 +1,41 @@
+https://leetcode.com/problems/maximum-frequency-stack/
+Solution:
+class FreqStack {
+    
+    Map<Integer,Stack<Integer>> hm;
+    Map<Integer,Integer> freq ;
+     int maxfreq = 1;
+    
+    public FreqStack() {
+       hm  = new HashMap<>();
+       freq =new HashMap<>(); 
+    }
+    
+    public void push(int x) {
+        freq.put(x,freq.getOrDefault(x,0)+1);
+        int currfreq = freq.get(x);
+        if(!hm.containsKey(currfreq))
+            hm.put(currfreq,new Stack<>());
+         hm.get(currfreq).push(x);
+        
+        if(maxfreq < currfreq)
+            maxfreq = currfreq;
+        
+    }
+    
+    public int pop() {
+        int x = hm.get(maxfreq).pop();
+          freq.put(x,freq.get(x)-1);
+        
+        if (hm.get(maxfreq).size() == 0)
+        {
+         //   hm.remove(maxfreq);
+            maxfreq--;
+        }
+        
+        return x;
+    }
+}
+
+Time Complexity : 0(1) for both push/pop
+Space Complexity : 0(n) n = no of elements in freq stack
