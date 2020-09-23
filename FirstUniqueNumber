@@ -1,5 +1,5 @@
 https://leetcode.com/problems/first-unique-number/
-
+Solution1: (LinkedHashMap - OrderedDictonary)
 class FirstUnique {
     private Map<Integer, Integer> map;
     public FirstUnique(int[] nums) {
@@ -17,4 +17,103 @@ class FirstUnique {
     public void add(int value) {
         map.put(value, map.getOrDefault(value, 0) + 1);
     }
+}
+
+Time:  O(1)
+Space: O(n) -> worst case
+
+Approach 2: (DoublyLinkedList + HashMap) - (No order maintenance concept)
+class FirstUnique {
+    
+    DoublyLinkedList head = new DoublyLinkedList(-1);
+    DoublyLinkedList tail = new DoublyLinkedList(-1);
+    Map<Integer,DoublyLinkedList> hm =new HashMap<>();
+
+    public FirstUnique(int[] nums) {
+        head.next = tail;
+        tail.prev= head;
+        for(int num:nums)
+            add(num);
+    }
+    
+    public int showFirstUnique() {
+        return head.next == tail ?-1:head.next.val;
+    }
+    
+    public void add(int value) {
+        if(!hm.containsKey(value))
+        {
+            hm.put(value,new DoublyLinkedList(value));
+            addToListEnd(hm.get(value));
+        }
+        else
+        {
+            removeFromList(hm.get(value));
+        }
+    }
+    
+    public void addToListEnd(DoublyLinkedList node)
+    {
+        if(tail == null || tail.prev == null)
+            return;
+        node.next = tail;
+        node.prev = tail.prev;
+        tail.prev = node;
+        node.prev.next = node;
+    }
+    
+    public void removeFromList(DoublyLinkedList node)
+    {
+        if(node.prev == null || node.next == null)
+            return;
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.prev = null;
+        node.next =null;
+    }
+}
+
+class DoublyLinkedList{
+    DoublyLinkedList prev,next;
+    int val;
+    DoublyLinkedList(int val)
+    {
+        this.val = val;
+    }
+}
+
+Time:O(1)
+Space: O(n)
+
+Solution3: (HashSet + LinkedHashSet)
+class FirstUnique {
+    Set<Integer> dups = new HashSet<>();
+    Set<Integer> unique = new LinkedHashSet<>();
+    
+    public FirstUnique(int[] nums) {
+        for(int i=0;i<nums.length;i++)
+            add(nums[i]);
+    }
+    
+    public int showFirstUnique() {
+      /*  if(unique.size() > 0)
+        {
+         for(int res:unique)
+             return res;
+        }
+        return -1; */
+        
+        return unique.size()>0 ? unique.iterator().next() : -1;
+        
+    }
+    
+    public void add(int value) {
+        if (dups.add(value))
+                unique.add(value);
+            else
+            {
+                unique.remove(value);
+            }
+        }
+    
 }
