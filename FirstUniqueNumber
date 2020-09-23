@@ -1,4 +1,6 @@
 https://leetcode.com/problems/first-unique-number/
+
+https://leetcode.com/problems/first-unique-number/discuss/601107/JavaPython-3-DoublyLinkedList-and-LinkedHashSetdict-O(n)-2-neat-codes-w-analysis.
 Solution1: (LinkedHashMap - OrderedDictonary)
 class FirstUnique {
     private Map<Integer, Integer> map;
