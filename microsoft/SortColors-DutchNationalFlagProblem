@@ -1,0 +1,121 @@
+https://leetcode.com/problems/sort-colors/
+
+
+Solution1: (Counting sort - count no of 0's,1's,2's)
+class Solution {
+    public void sortColors(int[] nums) {
+        
+      //  we will use the integers 0, 1, and 2 to represent the color red, white, and blue //respectively.
+        if(nums == null || nums.length < 2)
+            return;
+        
+        int red=0,blue=0,white=0;
+        
+        for(int num: nums)
+        {
+            if(num == 0)
+                red++;
+            else if(num == 1)
+                white++;
+            else
+                blue++;
+        }
+        int i=0;
+        while(red-- > 0)
+            nums[i++]  = 0;
+        while(white-- > 0)
+            nums[i++] = 1;
+        while(blue-- > 0)
+            nums[i++] = 2;
+            
+        
+    }
+}
+
+Time: 0(n) (Two pass) Space: 0(1)
+
+Solution2: (One pass)
+class Solution {
+    public void sortColors(int[] nums) {
+        
+      //  we will use the integers 0, 1, and 2 to represent the color red, white, and blue //respectively.
+        if(nums == null || nums.length < 2)
+            return;
+        
+        int start=0,end=nums.length-1;
+        int idx=0;
+        while(idx<=end)
+        {
+            if(nums[idx] == 0)
+            {
+                nums[idx++] = nums[start];
+                nums[start++] = 0;
+            }
+            else if(nums[idx] == 2)
+            {
+                nums[idx] = nums[end];
+                nums[end--] = 2;
+            }
+            else
+                idx++;
+        }
+            
+        
+    }
+}
+
+Solution3:(Solution2 ,using for loop)
+class Solution {
+    public void sortColors(int[] nums) {
+        
+      //  we will use the integers 0, 1, and 2 to represent the color red, white, and blue //respectively.
+        if(nums == null || nums.length < 2)
+            return;
+        int start=0,end=nums.length-1;
+        for(int idx=0;idx<=end;idx++)
+        {
+            if(nums[idx] == 0)
+            {
+                nums[idx] = 1;
+                nums[start++] = 0;
+            }
+            else if(nums[idx] == 2)
+            {
+                nums[idx--] = nums[end];
+                nums[end--] = 2;
+            }
+        }
+        
+    }
+}
+
+Solution4:(One pass - In a better way)
+
+class Solution {
+    public void sortColors(int[] nums) {
+        
+      //  we will use the integers 0, 1, and 2 to represent the color red, white, and blue //respectively.
+        if(nums == null || nums.length < 2)
+            return;
+        
+        int start=0,end=nums.length-1;
+        int idx=0;
+        while(idx<=end)
+        {
+            if(nums[idx] == 0)
+            {
+                nums[idx++] = 1;
+                nums[start++] = 0;
+            }
+            else if(nums[idx] == 2)
+            {
+                nums[idx] = nums[end];
+                nums[end--] = 2;
+            }
+            else
+                idx++;
+        }
+            
+        
+    }
+}
