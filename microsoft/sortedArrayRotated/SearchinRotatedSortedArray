@@ -1,0 +1,54 @@
+
+https://leetcode.com/explore/interview/card/microsoft/47/sorting-and-searching/191/
+
+Two Pass Approach:
+class Solution {
+    public int search(int[] nums, int target) {
+        
+        int low = 0,high = nums.length-1;
+        
+        //Find the inflection point
+        while(low < high)
+        {
+            int mid = low + (high-low)/2;
+            if(nums[mid] == target)
+                return mid;
+            else if(nums[mid] < nums[high])
+                high = mid;
+            else if(nums[mid] > nums[high])
+                low = mid +1;
+            else 
+                high--;
+        }
+        
+        //Decide the boundaries
+        int start = low;
+        low=0;high = nums.length-1;
+        if (target ==nums[start])
+            return start;
+        if (target > nums[start]  && target <= nums[high])
+            low=start+1;
+        else 
+            high=start-1;
+        
+        //Binary Searchh
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;
+            if(nums[mid] == target)
+                return mid;
+            
+            else if(nums[mid]  > target)
+                high = mid-1;
+            else
+                low = mid+1;
+        }
+          
+        return -1;
+    }
+}
+
+Time : 0(n) Space: O(1)
+
+One pass approach:
+
