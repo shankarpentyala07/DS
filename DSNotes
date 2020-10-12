@@ -5,7 +5,17 @@ Interview Questions: https://leetcode.com/discuss/interview-question/?currentPag
 
 Khan Academy : https://www.khanacademy.org/computing/computer-science/algorithms#graph-representation
 
+Learning:
+1. Have your ever wondered,how the left and right values are to be in a binary search.
+ex: Array is nums1
+left = 0, right = nums1.length-1 or right =nums1.length
+Here the values of left and right are the possible values.
+In a binary search,the possible values are 0 <-> nums1.length-1
+In a median of two sorted Arrays,the possible values are 0 <-> num1.length as for an array of size n ,there are n+1 possible partitions
+
 Interesing Problems:
 
 Sort Colors(Dutch National Flag Problem)
 https://leetcode.com/problems/sort-colors/
+
+
