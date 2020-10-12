@@ -1,6 +1,6 @@
 https://leetcode.com/problems/median-of-two-sorted-arrays/solution/
 
-Whether rmid = (m+n)/2 - lmid or rmid = (m+n+1)/2 - lmid
+Whether rmid = (m+n)/2 - lmid or rmid = (m+n+1)/2 - lmid (For odd total length)
 In rmid = (m+n)/2 - lmid -> the median is in the right hand side i.e.. Math.min(sright,lright);
 In rmid = (m+n+1)/2 - lmid -> the median is in the left hand side i.e.. Math.max(sleft,lleft);
 
