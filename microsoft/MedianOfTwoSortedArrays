@@ -1,0 +1,140 @@
+https://leetcode.com/problems/median-of-two-sorted-arrays/solution/
+
+Whether rmid = (m+n)/2 - lmid or rmid = (m+n+1)/2 - lmid
+In rmid = (m+n)/2 - lmid -> the median is in the right hand side i.e.. Math.min(sright,lright);
+In rmid = (m+n+1)/2 - lmid -> the median is in the left hand side i.e.. Math.max(sleft,lleft);
+
+For an array of size m -> we can have m+1 partitions
+
+Solution1:
+class Solution {
+    
+    public double findMedian(int[] nums1,int[] nums2)
+    {
+        
+        int l=0,r=nums1.length;
+        int m=nums1.length,n=nums2.length;
+        int sleft=0,sright=0,lleft=0,lright=0;
+        
+        while(l<=r)
+        {
+            int lmid = l + (r-l)/2;
+            int rmid = (m + n)/2 - lmid;
+            
+            //lval < rval+1 , rval < lval+1
+            
+            sleft = lmid > 0 ? nums1[lmid-1] : (int) Double.NEGATIVE_INFINITY;
+            sright = lmid < m ? nums1[lmid] : (int) Double.POSITIVE_INFINITY;
+            lleft = rmid > 0 ? nums2[rmid-1] : (int) Double.NEGATIVE_INFINITY;
+            lright = rmid < n ? nums2[rmid] : (int) Double.POSITIVE_INFINITY;
+        
+            if(sleft > lright )
+                r = lmid -1;
+            else if(lleft > sright)
+                l = lmid+1;
+            else 
+                break;  
+        }
+        
+        if ((m+n) % 2 != 0)
+            return Math.min(sright,lright);
+        else
+            return (Math.max(sleft,lleft) + Math.min(sright,lright) ) / 2.0;
+    }
+    
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length == 0)
+        {
+            int m = nums2.length;
+            if(m %  2 != 0)
+                return nums2[m/2];
+            else
+                return (nums2[m/2] + nums2[(m-1)/2]) / 2.0;
+                
+        }
+        
+        if(nums2.length == 0)
+        {
+            int n = nums1.length;
+            if(n %  2 != 0)
+                return nums1[n/2];
+            else
+                return (nums1[n/2] + nums1[(n-1)/2]) / 2.0;
+        }
+        if(nums1.length < nums2.length)
+              return findMedian(nums1,nums2);
+        else
+              return findMedian(nums2,nums1);
+        
+    }
+}
+
+Solution2:
+class Solution {
+    
+    public double findMedian(int[] nums1,int[] nums2)
+    {
+        
+        int l=0,r=nums1.length;
+        int m=nums1.length,n=nums2.length;
+        int sleft=0,sright=0,lleft=0,lright=0;
+        
+        while(l<=r)
+        {
+            int lmid = l + (r-l)/2;
+            int rmid = (m + n + 1)/2 - lmid;
+            
+            //lval < rval+1 , rval < lval+1
+            
+            sleft = lmid > 0 ? nums1[lmid-1] : (int) Double.NEGATIVE_INFINITY;
+            sright = lmid < m ? nums1[lmid] : (int) Double.POSITIVE_INFINITY;
+            lleft = rmid > 0 ? nums2[rmid-1] : (int) Double.NEGATIVE_INFINITY;
+            lright = rmid < n ? nums2[rmid] : (int) Double.POSITIVE_INFINITY;
+        
+            if(sleft > lright )
+                r = lmid -1;
+            else if(lleft > sright)
+                l = lmid+1;
+            else 
+                break;  
+        }
+        
+        if ((m+n) % 2 != 0)
+            return Math.max(sleft,lleft);
+        else
+            return (Math.max(sleft,lleft) + Math.min(sright,lright) ) / 2.0;
+    }
+    
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length == 0)
+        {
+            int m = nums2.length;
+            if(m %  2 != 0)
+                return nums2[m/2];
+            else
+                return (nums2[m/2] + nums2[(m-1)/2]) / 2.0;
+                
+        }
+        
+        if(nums2.length == 0)
+        {
+            int n = nums1.length;
+            if(n %  2 != 0)
+                return nums1[n/2];
+            else
+                return (nums1[n/2] + nums1[(n-1)/2]) / 2.0;
+        }
+        if(nums1.length < nums2.length)
+              return findMedian(nums1,nums2);
+        else
+              return findMedian(nums2,nums1);
+        
+    }
+}
+
+Time: O(log(min(m,n))
+Explanation:
+
+Very detailed Explanation:
+
+https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2481/Share-my-O(log(min(mn)))-solution-with-explanation/246906
