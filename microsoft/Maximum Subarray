@@ -1,0 +1,85 @@
+https://leetcode.com/problems/maximum-subarray/
+
+Solution1:
+Greedy Approach:
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int currsum = nums[0],maxsum = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            currsum = Math.max(nums[i],nums[i]+currsum);
+            maxsum = Math.max(maxsum,currsum);
+        }
+        return maxsum;
+        
+    }
+}
+
+Time: O(n) , Space: O(1)
+
+Solution2:
+Dynamic Programming
+class Solution {
+    public int maxSubArray(int[] nums) {
+        //Find the maxsum till that index
+        int maxsum = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            if(nums[i-1] > 0)
+                nums[i] = nums[i]+nums[i-1];
+            maxsum = Math.max(nums[i],maxsum);
+        }
+        
+        return maxsum;
+    }
+}
+
+Time : O(n), Space: O(1)
+
+Solution3:
+Divide and Conquer
+class Solution {
+    // Divide and Conquer Approach
+    
+    public int crossSum(int[] nums,int low,int high,int mid)
+    {
+        if(low == high)
+            return nums[low];
+        //calculate left sum ,direction mid -> left
+        int currsum = 0;
+        int leftsum = (int) Double.NEGATIVE_INFINITY;
+        for(int i=mid;i>=low;i--)
+        {
+            currsum += nums[i];
+            leftsum = Math.max(leftsum,currsum);
+        }
+        //calculate right sum,direction mid+1 -> right
+        
+        currsum=0;
+        int rightsum = (int) Double.NEGATIVE_INFINITY;
+        for(int i=mid+1;i<=high;i++)
+        {
+            currsum += nums[i];
+            rightsum = Math.max(rightsum,currsum);
+        }
+        
+        return leftsum + rightsum;
+    }
+    
+    public int maxSubArray(int[] nums,int low,int high)
+    {
+        if(low == high)
+            return nums[low];
+        int mid = low + (high-low)/2;
+        int leftSum = maxSubArray(nums,low,mid);
+        int rightSum = maxSubArray(nums,mid+1,high);
+        int crosssum = crossSum(nums,low,high,mid);
+        return Math.max(leftSum,Math.max(rightSum,crosssum));
+    }
+    public int maxSubArray(int[] nums) {
+        return maxSubArray(nums,0,nums.length-1);     
+    }
+}
+
+O(NlogN) time complexity.
+O(logN) to keep the recursion stack.
