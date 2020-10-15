@@ -1,3 +1,10 @@
+ some of the common design questions:
+1.Elevator
+2.bookmyshow
+3. social media website like Facebook, 
+
+etc. Looking for things like how do we process the request, class diagrams and the type of database, etc used.
+
 This video describes how to prepare for system design interview. Below is all the content described in the video.
 A - Ask good questions
 B - Don't use buzzwords
