@@ -1,0 +1,94 @@
+
+https://leetcode.com/problems/find-the-celebrity/submissions/
+Solution1:
+/* The knows API is defined in the parent class Relation.
+      boolean knows(int a, int b); */
+
+public class Solution extends Relation {
+    public int findCelebrity(int n) {
+
+        for (int i=0;i<n;i++)
+        {
+            int j=0;
+            for(;j<n;j++)
+            {
+                if( i != j  && (knows(i,j) || !knows(j,i)))
+                    break;
+                
+            }
+            if(j == n)
+                return i;
+        }
+        
+        return -1;
+    }
+}
+Time : O(n2),Space: O(1)
+
+Solution 2: (Brilliant in Time: O(n),Space: O(1))
+/* The knows API is defined in the parent class Relation.
+      boolean knows(int a, int b); */
+
+public class Solution extends Relation {
+    public int findCelebrity(int n) {
+        
+        //Considering 0 as celebrity
+        int celebrity = 0;
+        //Finding out who is the only one possible celebrity 
+        //by ruling out other celebrities
+        for (int i=1;i<n;i++)
+        {
+            if(knows(celebrity,i))
+                celebrity=i;
+        }
+        
+        //We fetched the celebrity,The question is,Is he the celebrity ?
+        
+        for(int i=0;i<n;i++)
+        {
+            if (i != celebrity && (knows(celebrity,i) || !knows(i,celebrity)))
+                return -1;
+        }
+        
+        return celebrity;
+    }
+}
+
+Solution3: Optimizing Solution 2,Time and Space remains Same)
+/* The knows API is defined in the parent class Relation.
+      boolean knows(int a, int b); */
+
+public class Solution extends Relation {
+    public int findCelebrity(int n) {
+        
+        //Considering 0 as celebrity
+        int celebrity = 0;
+        //Finding out who is the only one possible celebrity 
+        //by ruling out other celebrities
+        for (int i=1;i<n;i++)
+        {
+            if(knows(celebrity,i))
+                celebrity=i;
+        }
+        
+        //We fetched the celebrity,The question is,Is he the celebrity ?
+        
+        //Since we already know from above celebrity does not know any people above him
+       //We are checking whether he knows anyone below him instead of checking everyone again
+        
+        for(int i=0;i<celebrity;i++)
+        {
+            if (knows(celebrity,i))
+                return -1;
+        }
+        
+        //Here we check if everyone knows celebrity 
+        for(int i=0;i<n;i++)
+        {
+            if(!knows(i,celebrity))
+                return -1;
+        }
+        
+        return celebrity;
+    }
+}
