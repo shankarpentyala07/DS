@@ -1,0 +1,38 @@
+https://leetcode.com/problems/excel-sheet-column-number/solution/
+
+Sol1:
+
+class Solution {
+    public int titleToNumber(String s) {
+        
+        int res = 0;
+        for(int i= s.length()-1;i>=0;i--)
+        {
+           res += ((s.charAt(i) - 'A') + 1) * Math.pow(26,s.length()-1-i);
+        }
+        return res;
+        
+    }
+}
+
+Sol2 : (Its Aweessome)
+
+Concept : Number - 1337
+'1' = 1
+'13' = (1 x 10) + 3 = 13
+'133' = (13 x 10) + 3 = 133
+'1337' = (133 x 10) + 7 = 1337
+ Same Approach for 26-base system
+
+class Solution {
+    public int titleToNumber(String s) {
+        
+        int res = 0;
+        
+        for(int i=0;i<s.length();i++)
+            res = res*26 + (s.charAt(i)-'A' + 1);
+        
+        return res;
+        
+    }
+}
