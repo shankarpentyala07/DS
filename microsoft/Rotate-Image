@@ -1,0 +1,32 @@
+https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/202/
+
+class Solution {
+    public void rotate(int[][] matrix) {   
+        
+        if(matrix == null || matrix.length == 0)
+            return;
+        //Transpose of matrix
+        int nr = matrix.length,nc = matrix[0].length;
+        for(int i =0;i<nr;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
+            }
+        }
+        
+        //Swap Rows from first to last;
+        for(int i=0;i<nr;i++)
+        {
+            for(int j=0;j<nc/2;j++)
+            {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][nc-j-1];
+                matrix[i][nc-j-1] = tmp;
+                
+            }
+        }
+    }
+}
