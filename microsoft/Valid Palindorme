@@ -1,4 +1,32 @@
 https://leetcode.com/problems/valid-palindrome/solution/
+
+solrevised1:
+class Solution {
+    public boolean isPalindrome(String s) {
+        
+        if(s.isEmpty())
+            return true;
+        
+        int left = 0,right = s.length()-1;
+        char ch[] = s.toLowerCase().toCharArray();
+        while(left < right)
+        {
+            if(!Character.isLetterOrDigit(ch[left]))
+                left++;
+            else if(!Character.isLetterOrDigit(ch[right]))
+                right--;
+            else
+            {
+                if(ch[left++] != ch[right--])
+                    return false;
+             
+            }      
+        }
+        
+        return true;
+    }
+}
+
 sol1:
 class Solution {
     public boolean isPalindrome(String s) {
