@@ -1,0 +1,138 @@
+https://leetcode.com/problems/top-k-frequent-elements/
+
+Solution1: Heap
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        
+        
+    int[] topNumbers = new int[k];
+    // TODO: Write your code here
+    HashMap<Integer,Integer> freq = new HashMap<>();
+    for(int i=0;i<nums.length;i++)
+      freq.put(nums[i],freq.getOrDefault(nums[i],0)+1);
+    //Max Heap
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>((a,b)->(freq.get(a)-freq.get(b)));
+    
+    for(int key : freq.keySet())
+      {
+        if(minHeap.size() < k)
+            minHeap.add(key);
+        else
+        {
+            if(freq.get(minHeap.peek()) < freq.get(key))
+            {
+                minHeap.poll();
+                minHeap.add(key);            
+            }
+        }
+    }
+             
+    int idx=0;
+      while(k-- > 0)
+          topNumbers[idx++] = minHeap.poll();
+    return topNumbers;
+        
+    }
+}
+Solution2: Quick Select
+class Solution {
+    public void swap(int[] unique,int idx1,int idx2)
+    {
+        int tmp = unique[idx1];
+        unique[idx1] = unique[idx2];
+        unique[idx2] = tmp;
+    }
+    public int quicksort(int[] unique,int low,int high,HashMap<Integer,Integer> hm)
+    {
+        int mid = low + (high-low)/2;
+        swap(unique,mid,high);
+        int idx = low;
+        int highfreq = hm.get(unique[high]);
+        while(idx < high)
+        {
+            if(hm.get(unique[idx]) > highfreq)
+                swap(unique,idx,low++);
+            idx++;           
+        }
+        
+        swap(unique,low,high);
+        return low;
+        
+    }
+    public int[] topKFrequent(int[] nums, int k) {
+        
+    if(nums == null || nums.length == 0)
+            return new int[]{};
+    if(nums.length == 1)
+        return nums;
+        
+    //Build freq Map
+    HashMap<Integer,Integer> hm = new HashMap<>();
+    for(int num : nums)
+        hm.put(num,hm.getOrDefault(num,0)+1);
+    
+    //unique elements array
+    int[] unique = new int[hm.size()];
+    int idx=0;
+    for(int key:hm.keySet())
+        unique[idx++] = key;
+    
+    //Perform QuickSort
+    int low=0,high=unique.length-1;
+    while(low<high)
+    {
+        int mid = quicksort(unique,low,high,hm);
+        if(mid == k)
+            break;
+        else if(mid < k)
+            low = mid+1;
+        else
+            high=mid-1;
+    }
+           
+    return Arrays.copyOfRange(unique,0,k);
+    }
+}
+
+Solution3: Bucket Sort
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        
+        
+    int[] topNumbers = new int[k];
+    // TODO: Write your code here
+    HashMap<Integer,Integer> freq = new HashMap<>();
+    for(int i=0;i<nums.length;i++)
+      freq.put(nums[i],freq.getOrDefault(nums[i],0)+1);
+    
+    List<Integer>[] bucket = new List[nums.length+1];
+    //Bucket Sort
+    for(int key : freq.keySet())
+    {
+        int value = freq.get(key);
+        if(bucket[value] == null)
+            bucket[value] = new ArrayList<>();
+        bucket[value].add(key);
+    }
+      
+    int idx = 0;
+    for(int i= bucket.length-1;i>=0;i--)
+    {
+        if(bucket[i] != null)
+        {
+            for(int x : bucket[i])
+            {
+                topNumbers[idx++] = x;
+                if(idx == k)
+                    break;
+            }
+        }
+    if(idx == k)
+        break;
+            
+    }
+        
+        return topNumbers;
+        
+    }
+}
