@@ -51,3 +51,25 @@ class Solution {
         
     }
 }
+
+Solution3:(Same as 2 without comments)
+class Solution {
+    public int lengthOfLongestSubstring(String str) {
+        
+        if(str == null || str.length() == 0)
+            return 0;
+        char[] strA = str.toCharArray();
+        HashMap<Character,Integer> indexMap = new HashMap<>();
+        int wStart=0,maxlen=0;
+        for(int wEnd=0;wEnd<strA.length;wEnd++)
+        {
+            if (indexMap.containsKey(strA[wEnd]))
+                wStart = Math.max(wStart,indexMap.get(strA[wEnd]) +1);
+            indexMap.put(strA[wEnd],wEnd);
+            maxlen = Math.max(maxlen,wEnd-wStart+1);
+        }
+        
+        return maxlen;
+         
+    }
+}
