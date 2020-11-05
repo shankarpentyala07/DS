@@ -1,0 +1,24 @@
+https://leetcode.com/problems/fruit-into-baskets/
+class Solution {
+    public int totalFruit(int[] arr) {
+        HashMap<Integer,Integer>  freqMap = new HashMap<>();
+
+    int wStart = 0,maxCount=0;
+    for(int wEnd=0;wEnd<arr.length;wEnd++)
+    {
+      freqMap.put(arr[wEnd],freqMap.getOrDefault(arr[wEnd],0)+1);
+        while(freqMap.size() > 2)
+        {
+          int value = freqMap.get(arr[wStart]);
+          freqMap.put(arr[wStart],value-1);
+          if(value == 1)
+            freqMap.remove(arr[wStart]);
+          wStart++;
+        }
+          maxCount = Math.max(maxCount,wEnd-wStart+1);
+      }
+
+    return maxCount;
+        
+    }
+}
