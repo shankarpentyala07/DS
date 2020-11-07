@@ -1,0 +1,37 @@
+https://leetcode.com/problems/insert-interval/
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        
+        if(intervals == null || intervals.length == 0)
+            return new int[][]{{newInterval[0],newInterval[1]}};
+        
+        if(newInterval.length == 0)
+            return intervals;
+       
+        int idx=0,i=0;
+        int len = intervals.length;
+        int[][] res = new int[intervals.length+1][2];
+
+        while(i < len && intervals[i][1] < newInterval[0])
+            res[idx++] = intervals[i++];
+        
+            while(i<len && intervals[i][0] <= newInterval[1])
+            {
+                newInterval[0] = Math.min(newInterval[0],intervals[i][0]);
+                newInterval[1] = Math.max(intervals[i++][1],newInterval[1]);
+            }
+            res[idx++] = newInterval;
+        
+         while(i < len)
+             res[idx++] = intervals[i++];
+
+        
+        return Arrays.copyOfRange(res,0,idx);
+            
+            
+        
+    }
+}
+
+Time: O(N)
+Space: O(N)
