@@ -1,0 +1,58 @@
+https://leetcode.com/problems/meeting-rooms-ii/
+
+Solution1:
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        
+        if(intervals == null || intervals.length == 0)
+            return 0;
+        if(intervals.length == 1)
+            return 1;
+        int minrooms = 1;
+        
+        
+        Arrays.sort(intervals,(i1,i2) -> (i1[0]-i2[0]));
+        PriorityQueue<Integer> minheap = new PriorityQueue<>();
+        minheap.add(intervals[0][1]);
+        
+        for(int i=1;i<intervals.length;i++)
+        {
+            while(!minheap.isEmpty() && minheap.peek() <= intervals[i][0])
+                 minheap.poll();
+             minheap.add(intervals[i][1]);
+             minrooms = Math.max(minheap.size(),minrooms);
+        }
+        
+        return minrooms;
+    }
+}
+
+Solution2:
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        
+        if(intervals == null || intervals.length == 0)
+            return 0;
+        
+        int[] start = new int[intervals.length];
+        int[] end = new int[intervals.length];
+        for(int i=0;i<intervals.length;i++)
+        {
+            start[i] = intervals[i][0];
+            end[i] = intervals[i][1];
+        }
+        
+        Arrays.sort(start);
+        Arrays.sort(end);
+        int count = 0,j=0;
+        for(int i=0;i<intervals.length;i++)
+        {
+            if(start[i] < end[j] )
+                count++;
+            else
+                j++;
+        }
+        
+        return count;
+    }
+}
