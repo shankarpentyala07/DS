@@ -1,0 +1,81 @@
+https://leetcode.com/problems/employee-free-time/
+sol1:
+class Solution {
+    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+       
+        List<Interval> tmp = new ArrayList<>();
+        for(List<Interval> intervallist : schedule)
+            for(Interval interval : intervallist)
+                tmp.add(interval);
+        
+        
+        Collections.sort(tmp,(tmp1,tmp2) -> (tmp1.start-tmp2.start));
+        
+        List<Interval> res = new ArrayList<>();
+        int end = tmp.get(0).end;
+        for(int i=1;i<tmp.size();i++)
+        {
+            if(tmp.get(i).start > end)
+                res.add(new Interval(end,tmp.get(i).start));
+            end = Math.max(tmp.get(i).end,end);
+        }
+        return res;
+    }
+}
+Sol2: (using min heap, we take the first interval of each employee and insert it in a Min Heap.Whenever we take an interval out of the Min Heap,
+we can insert the same employee’s next interval. This also means that we need to know which interval belongs to which employee.)
+/*
+// Definition for an Interval.
+class Interval {
+    public int start;
+    public int end;
+
+    public Interval() {}
+
+    public Interval(int _start, int _end) {
+        start = _start;
+        end = _end;
+    }
+};
+*/
+
+class pqtype
+{
+    Interval intrvl;
+    int listno;
+    int index;
+    public pqtype(Interval intrvl,int listno,int index)
+    {
+        this.intrvl = intrvl;
+        this.listno = listno;
+        this.index = index;
+    }
+};
+
+class Solution {
+    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+    
+        List<Interval> res = new ArrayList<>();
+        
+        PriorityQueue<pqtype> minheap = new PriorityQueue<>((a,b) -> (a.intrvl.start - b.intrvl.start));
+        for(int i = 0;i < schedule.size();i++)
+            minheap.add(new pqtype(schedule.get(i).get(0),i,0));  
+        
+        pqtype pq1 = minheap.poll();
+        int end = pq1.intrvl.end;
+        if(pq1.index < schedule.get(pq1.listno).size()-1)
+            minheap.add(new pqtype(schedule.get(pq1.listno).get(pq1.index+1),pq1.listno,pq1.index+1));
+        
+        while(!minheap.isEmpty())
+        {
+            pq1 = minheap.poll();
+            if(pq1.intrvl.start > end )
+                res.add(new Interval(end,pq1.intrvl.start));
+            end = Math.max(end,pq1.intrvl.end);
+        if(pq1.index < schedule.get(pq1.listno).size()-1)
+            minheap.add(new pqtype(schedule.get(pq1.listno).get(pq1.index+1),pq1.listno,pq1.index+1));            
+        }
+       
+        return res;
+    }
+}
