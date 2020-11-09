@@ -1,0 +1,76 @@
+https://leetcode.com/problems/find-median-from-data-stream/
+
+Solution1:
+class MedianFinder {
+    PriorityQueue<Integer> minheap ; //Right side
+    PriorityQueue<Integer> maxheap ; //left side
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        minheap = new PriorityQueue<>((a,b) -> (a-b));
+        maxheap = new PriorityQueue<>((a,b) -> (b-a));        
+    }
+    
+    public void addNum(int num) {
+     if (maxheap.size() > minheap.size())
+        {
+          if(maxheap.peek() <= num) 
+              minheap.add(num);
+          else
+            {          
+              maxheap.add(num);
+              minheap.add(maxheap.remove());
+            }
+        }
+        else
+        {
+          if (maxheap.isEmpty() || maxheap.peek() >= num)
+              maxheap.add(num);
+          else
+          {
+            minheap.add(num); 
+            maxheap.add(minheap.remove());
+          }
+            
+        }
+    }
+    
+    public double findMedian() {
+    int len = maxheap.size() + minheap.size();
+    if(len % 2 != 0)
+      return maxheap.peek();
+    else
+      return (maxheap.peek() + minheap.peek()) / 2.0;
+        
+    }
+}
+
+Solution2(Same as 1)
+class MedianFinder {
+    PriorityQueue<Integer> minHeap; 
+    PriorityQueue<Integer> maxHeap ;
+
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        this.minHeap = new PriorityQueue<Integer>();
+        this.maxHeap = new PriorityQueue<Integer>((a,b)->b-a);
+    }
+    
+    public void addNum(int num) {
+       if(minHeap.size() == maxHeap.size()){
+          minHeap.offer(num);
+          maxHeap.offer(minHeap.poll());
+       }else if(maxHeap.size() > minHeap.size()){
+           maxHeap.add(num);
+           minHeap.add(maxHeap.poll());
+       }
+    }
+    
+    public double findMedian() {
+        if(maxHeap.size() == 0) return 0;
+        if(maxHeap.size() == minHeap.size())
+            return (minHeap.peek() + maxHeap.peek())/2.0;
+        else 
+            return maxHeap.peek();
+    }
+}
+
