@@ -1,0 +1,126 @@
+https://leetcode.com/problems/permutations/
+
+Solution1:(BFS)
+This problem follows the Subsets pattern and we can follow a similar Breadth First Search (BFS) approach. However, unlike Subsets, 
+every permutation must contain all the numbers.
+Let’s take the example-1 mentioned above to generate all the permutations. Following a BFS approach, we will consider one number at a time:
+If the given set is empty then we have only an empty permutation set: []
+Let’s add the first element (1), the permutations will be: [1]
+Let’s add the second element (3), the permutations will be: [3,1], [1,3]
+Let’s add the third element (5), the permutations will be: [5,3,1], [3,5,1], [3,1,5], [5,1,3], [1,5,3], [1,3,5]
+Let’s analyze the permutations in the 3rd and 4th step. How can we generate permutations in the 4th step from the permutations of the 3rd step?
+If we look closely, we will realize that when we add a new number (5), we take each permutation of the previous step and insert the new number 
+in every position to generate the new permutations. For example, inserting ‘5’ in different positions of [3,1] will give us the following permutations:
+This problem follows the Subsets pattern and we can follow a similar Breadth First Search (BFS) approach. However, unlike Subsets, every permutation must
+contain all the numbers.
+Let’s take the example-1 mentioned above to generate all the permutations. Following a BFS approach, we will consider one number at a time:
+
+If the given set is empty then we have only an empty permutation set: []
+Let’s add the first element (1), the permutations will be: [1]
+Let’s add the second element (3), the permutations will be: [3,1], [1,3]
+Let’s add the third element (5), the permutations will be: [5,3,1], [3,5,1], [3,1,5], [5,1,3], [1,5,3], [1,3,5]
+Let’s analyze the permutations in the 3rd and 4th step. How can we generate permutations in the 4th step from the permutations of the 3rd step?
+
+If we look closely, we will realize that when we add a new number (5), we take each permutation of the previous step and insert the new number in
+every position to generate the new permutations. For example, inserting ‘5’ in different positions of [3,1] will give us the following permutations:
+
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+       
+        List<List<Integer>> permutations = new ArrayList<>();
+        if(nums == null || nums.length == 0)
+            return permutations;
+        //Add an empty set - BFS approach
+        Queue<List<Integer>> queue = new LinkedList<>();
+        queue.add(new ArrayList<Integer>());
+        
+        for( int num : nums)
+        {
+            int size = queue.size();
+            for(int i=0;i<size;i++)
+            {
+               
+                int tmpsize = queue.peek().size();
+                for(int j=0;j<=tmpsize;j++)
+                {
+                    List<Integer> tmp = new ArrayList<>(queue.peek());
+                    tmp.add(j,num);
+                    if(tmp.size() == nums.length)
+                        permutations.add(tmp);
+                    else
+                    queue.add(tmp);
+                }
+                        
+                  queue.poll();  
+            }
+        }
+        return permutations;
+    }
+}
+
+Solution2:(BFS in recursive manner)
+class Solution {
+        
+    public void permute(int[] nums,int idx,List<Integer> currPermute,List<List<Integer>> res)
+    {
+        if(currPermute.size() == nums.length)
+            res.add(new ArrayList<>(currPermute));
+        else
+        {
+             
+            for(int i=0;i<=currPermute.size();i++)
+            {
+                List<Integer> tmp = new ArrayList<>(currPermute);
+                tmp.add(i,nums[idx]);
+                permute(nums,idx+1,tmp,res);
+            }
+        }
+    }
+    
+    public List<List<Integer>> permute(int[] nums) {
+       
+        List<List<Integer>> res = new ArrayList<>();
+        if(nums == null || nums.length == 0)
+            return res;
+        //Add an empty set - BFS approach
+        
+        permute(nums,0,new ArrayList<Integer>(),res);
+        return res;
+    }    
+}
+
+Solution3: (Backtracking)
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        
+        List<List<Integer>> output = new LinkedList();
+        ArrayList<Integer> nums_lst = new ArrayList<Integer>();
+        for(int num: nums)
+            nums_lst.add(num);
+        
+        permute(nums_lst,0,nums.length-1,output);
+        return output;
+        
+    }
+    
+    public void permute(ArrayList<Integer> nums,int l,int r,List<List<Integer>> output)
+    {
+        if(l == r)
+            output.add(new ArrayList<Integer>(nums));
+        
+        for(int i=l;i<=r;i++)
+        {
+            swap(nums,i,l);
+            permute(nums,l+1,r,output);
+            swap(nums,i,l);
+        }
+    }
+    
+    public void swap(ArrayList<Integer> nums,int i,int l)
+    {
+        int tmp = nums.get(i);
+        nums.set(i,nums.get(l));
+        nums.set(l,tmp);
+    }
+}
