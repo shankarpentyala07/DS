@@ -1,0 +1,32 @@
+https://leetcode.com/problems/letter-case-permutation/
+class Solution {
+    public List<String> letterCasePermutation(String str) {
+        List<String> permutations = new ArrayList<>();
+    // TODO: Write your code here
+    //BFS approach
+    permutations.add(str);
+    int len = str.length();
+    for(int i=0;i<len;i++)
+    {
+      int size = permutations.size();
+      for(int j=0;j<size;j++)
+      {
+          char[] ch = permutations.get(j).toCharArray();
+          if('a' <= ch[i] && ch[i] <= 'z')
+          {
+              ch[i] = Character.toUpperCase(ch[i]);
+               permutations.add(String.valueOf(ch));
+          }
+          else if ('A' <= ch[i] && ch[i] <= 'Z')
+          {
+              ch[i] = Character.toLowerCase(ch[i]);
+              permutations.add(String.valueOf(ch));
+          }             
+      }
+    }
+    return permutations;
+        
+    }
+}
+Time: O(N*2^N)
+Space: O(N*2^N)
