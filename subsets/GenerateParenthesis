@@ -74,3 +74,36 @@ class Solution {
         return res;
     }
 }
+
+Sol3: (Same as 2 ,using StringBuilder)
+class Solution {
+    
+
+    public void generateParenthesis(StringBuilder sb,int pos,int open,int close,List<String> res,int n)
+    {
+        if(pos == 2*n)
+                res.add(sb.toString());
+        else
+        {
+            if(open < n)
+            {
+            sb.append('(');
+            generateParenthesis(sb,pos+1,open+1,close,res,n);
+            sb.setLength(sb.length()-1);
+                
+            }
+            if(close < open)
+            {
+            sb.append(')');
+            generateParenthesis(sb,pos+1,open,close+1,res,n); 
+            sb.setLength(sb.length()-1);
+            }
+        }
+        
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        generateParenthesis(new StringBuilder(),0,0,0,res,n);
+        return res;
+    }
+}
