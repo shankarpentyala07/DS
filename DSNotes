@@ -61,3 +61,7 @@ public void generateParenthesis(StringBuilder sb,int pos,int open,int close,List
         }
         
     }
+
+https://shahriar.svbtle.com/Understanding-writethrough-writearound-and-writeback-caching-with-python
+http://highscalability.squarespace.com/blog/2017/12/11/netflix-what-happens-when-you-press-play.html
+https://leetcode.com/problems/sliding-window-maximum/
