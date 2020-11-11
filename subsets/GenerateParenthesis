@@ -1,0 +1,76 @@
+
+
+Sol1:
+class Solution {
+    
+    public boolean valid(char[] comb)
+    {
+        int balance = 0;
+        for(char ch : comb)
+        {
+            if(ch == '(')
+                balance++;
+            else
+                balance--;
+            if(balance < 0)
+                return false;
+        }
+        return balance == 0;
+    }
+    public void generateParenthesis(char[] comb,int pos,List<String> res)
+    {
+        if(pos == comb.length)
+        {
+            if (valid(comb))
+                res.add(String.valueOf(comb));
+        }
+        else
+        {
+            comb[pos] = '(';
+            generateParenthesis(comb,pos+1,res);
+            comb[pos] = ')';
+            generateParenthesis(comb,pos+1,res);        
+        }
+        
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        generateParenthesis(new char[2*n],0,res);
+        return res;
+    }
+}
+
+Time: O(2^2n)
+Space: O(n)
+
+Sol2: (Removing Valid function)
+class Solution {
+    
+
+    public void generateParenthesis(char[] comb,int pos,int open,int close,List<String> res)
+    {
+        if(pos == comb.length)
+        {
+                res.add(String.valueOf(comb));
+        }
+        else
+        {
+            if(open < comb.length/2)
+            {
+            comb[pos] = '(';
+            generateParenthesis(comb,pos+1,open+1,close,res);
+            }
+            if(close < open)
+            {
+            comb[pos] = ')';
+            generateParenthesis(comb,pos+1,open,close+1,res);  
+            }
+        }
+        
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        generateParenthesis(new char[2*n],0,0,0,res);
+        return res;
+    }
+}
