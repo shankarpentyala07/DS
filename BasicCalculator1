@@ -1,0 +1,57 @@
+https://leetcode.com/problems/basic-calculator/
+Solution1: (Stack + String reversal)
+class Solution {
+    public int evaluate(Stack<Object> stack)
+    {
+        int res = (int) stack.pop();
+        while(!stack.isEmpty() && (char) stack.peek() != ')')
+        {
+            char sign = (char) stack.pop();
+            int num2 = (int) stack.pop();
+            if(sign == '+')
+                res = res + num2;
+            else
+                res = res-num2;
+        }
+        return res;
+    }
+    public int calculate(String s) {
+        int len = s.length();
+        Stack<Object> stack = new Stack<>();
+        int num=0;
+        int power=0;
+        for(int i=len-1;i>=0;i--)
+        {
+            if(s.charAt(i) >= '0' && s.charAt(i) <= '9')
+            {
+                num = (s.charAt(i)-'0') * ((int) Math.pow(10,power)) + num;
+                power++;
+            }
+            else if (s.charAt(i) != ' ')     
+            {
+                if(power != 0)
+                {
+                    stack.push(num);
+                    power=0;
+                    num=0;
+                }
+                
+                if(s.charAt(i) == '(')
+                {
+                int res = evaluate(stack);
+                stack.pop();
+                stack.push(res);
+                }
+                else
+              
+                stack.push(s.charAt(i));
+            }
+                          
+            }
+        
+        if(power!= 0)
+            stack.push(num);
+       return  evaluate(stack);
+        
+    }
+}
