@@ -1,0 +1,7 @@
+Messaging guarantees are an important part of designing systems. We look at 3 guarantees for messaging:
+
+1) Guaranteed delivery ensures that the message reaches the client once it is received on the server. This is done using replays.
+2) Ordered delivery is a crucial feature in many services. It ensures that messages are either received in order of receiving or not at all.
+3) Idempotency ensures that duplicate messages during retrial are ignored by the next system.
+
+These guarantees are achieved using retrial, dedicated threads or message queues per set of users and checks for duplicates.
