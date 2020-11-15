@@ -4,4 +4,35 @@ Messaging guarantees are an important part of designing systems. We look at 3 gu
 2) Ordered delivery is a crucial feature in many services. It ensures that messages are either received in order of receiving or not at all.
 3) Idempotency ensures that duplicate messages during retrial are ignored by the next system.
 
-These guarantees are achieved using retrial, dedicated threads or message queues per set of users and checks for duplicates.
+These guarantees are achieved using retrial, dedicated threads or message queues per set of users and checks for duplicates.\\\
+
+--------------------------------------------------------------*****************----------------------------------------------------------------------------------
+
+Databases Vs Message Queues:
+
+Databases are often used to store various types of information, but one case where it becomes an a problem is when being used as a message broker.
+
+The database is rarely designed to deal with messaging features, and hence is a poor substitute of a specialized message queue. When designing a system, 
+this pattern is considered an anti pattern. 
+
+Here are possible drawbacks:
+1) Polling intervals have to be set correctly. Too long makes the system is inefficient. Too short makes the database undergo heavy read load.
+2) Read and write operation heavy DB. Usually, they are good at one of the two.
+3) Manual delete procedures to be written to remove read messages.
+4) Scaling is difficult conceptually and physically.
+
+Disadvantages of a Message Queue:
+1) Adds more moving parts to the system.
+2) Cost of setting up the MQ along with training is large.
+3) Maybe be overkill for a small service.
+
+In a system design interview, it is important to be able to reason why or why not a system needs a message queue. 
+These reasons allow us to argue on the merits and demerits of the two approaches.
+
+However, there are blogs on why Databases are perfectly fine as message queues too. A deep understanding of the pros and cons helps evaluate how effective they 
+would be for a given scenario. 
+
+In general, for a small application, databases are fine as they bring no additional moving part to the system. For complex message sending requirements, 
+it is useful to have an abstraction such as a message queue handle message delivery for us.
+
+--------------------------------------------------------------*****************----------------------------------------------------------------------------------
