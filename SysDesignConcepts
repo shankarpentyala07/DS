@@ -1,1 +1,19 @@
+Consistent Hashing
+MemCached
+Cache : writethrough or readthrough
+
+
 Amazon S3
+relational database like MySQL 
+Distributed Key-Value store like Dynamo or Cassandra
+
+
+
+
+----Template---
+NonFunctional - Behavorial
+Functional - Business
+Capactity Estimation:(Make Assumptions)
+a) Traffic
+b) Storage
+c) Network
