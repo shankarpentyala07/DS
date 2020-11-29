@@ -1,0 +1,53 @@
+https://leetcode.com/problems/find-smallest-letter-greater-than-target/
+
+Solution 1:(Binary Search)
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+    
+        target++;
+        
+        int low = 0,high = letters.length-1;
+        
+        if (target > letters[high])
+            return letters[0];
+        
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;
+            
+            if(letters[mid] == target)
+                return letters[mid];
+            else if (letters[mid] < target)
+                low = mid+1;
+            else
+                high = mid-1;
+        }
+            
+        return letters[low];
+        
+    }
+}
+
+Solution2:(Without Modifying target):
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        
+        int low = 0,high = letters.length-1;
+        
+        if (target >= letters[high])
+            return letters[0];
+        
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;       
+            
+            if (letters[mid] <= target)
+                low = mid+1;
+            else
+                high = mid-1;
+        }
+            
+        return letters[low];
+        
+    }
+}
