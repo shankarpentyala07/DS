@@ -77,3 +77,30 @@ class Solution {
         
     }
 }
+
+
+solution 4(using Array instead of Map)
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        //sliding window approach
+        
+        int len;
+        if(s == null)
+            return 0;
+        if((len = s.length()) < 2)
+            return len;
+        
+      //  Map<Character,Integer> hm = new HashMap<>();
+        int[] index = new int[128]; //ascii 7 bits representation - 128 possibilites
+        int wStart=0, maxlen=1;
+        for(int wEnd=0;wEnd<len;wEnd++)
+        {
+            char ch = s.charAt(wEnd);
+            wStart = Math.max(wStart,index[ch]);
+            index[ch] =  wEnd+1;
+            maxlen = Math.max(maxlen,wEnd-wStart+1);
+        }
+        return maxlen;
+        
+    }
+}
