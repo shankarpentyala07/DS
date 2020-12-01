@@ -54,22 +54,26 @@ class Solution {
 
 Solution3:(Same as 2 without comments)
 class Solution {
-    public int lengthOfLongestSubstring(String str) {
+    public int lengthOfLongestSubstring(String s) {
+        //sliding window approach
         
-        if(str == null || str.length() == 0)
+        int len;
+        if(s == null)
             return 0;
-        char[] strA = str.toCharArray();
-        HashMap<Character,Integer> indexMap = new HashMap<>();
-        int wStart=0,maxlen=0;
-        for(int wEnd=0;wEnd<strA.length;wEnd++)
+        if((len = s.length()) < 2)
+            return len;
+        
+        Map<Character,Integer> hm = new HashMap<>();
+        int wStart=0, maxlen=1;
+        for(int wEnd=0;wEnd<len;wEnd++)
         {
-            if (indexMap.containsKey(strA[wEnd]))
-                wStart = Math.max(wStart,indexMap.get(strA[wEnd]) +1);
-            indexMap.put(strA[wEnd],wEnd);
+            char ch = s.charAt(wEnd);
+            if(hm.containsKey(ch))
+                wStart = Math.max(wStart,hm.get(ch)+1);
+            hm.put(ch,wEnd);
             maxlen = Math.max(maxlen,wEnd-wStart+1);
         }
-        
         return maxlen;
-         
+        
     }
 }
