@@ -1,5 +1,30 @@
 https://leetcode.com/problems/longest-repeating-character-replacement/
-Sol:
+Sol1:(using Map)
+class Solution {
+    public int characterReplacement(String str, int k) {
+        
+    Map<Character,Integer> freqMap = new HashMap<>();
+    int wStart = 0,len = str.length(),maxfreq=0;
+    int maxlen=0;
+    for(int wEnd=0;wEnd < len;wEnd++)
+    {
+      char ch = str.charAt(wEnd);
+      freqMap.put(ch,freqMap.getOrDefault(ch,0)+1);
+      maxfreq = Math.max(maxfreq,freqMap.get(ch));
+      if(wEnd-wStart+1-maxfreq > k)
+      {
+        int val = freqMap.get(str.charAt(wStart));
+        freqMap.put(str.charAt(wStart),val-1);
+        wStart++;
+      }
+      maxlen = Math.max(maxlen,wEnd-wStart+1);
+
+    }
+    return maxlen;
+    }
+}
+
+Sol2 :(using array instead of Map)
 class Solution {
     public int characterReplacement(String s, int k) {
         
