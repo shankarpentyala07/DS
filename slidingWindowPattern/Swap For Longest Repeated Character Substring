@@ -28,6 +28,17 @@ Constraints:
 1 <= text.length <= 20000
 text consist of lowercase English characters only.
 
+
+Solution key:
+ Approach 1: Get The Index of Each Segment
+ * The idea is to keep track of all repeated character segments and see if the neighbor segments (segments separated by one other character) can be merged:
+ *  1. There exist a third segment with same character, swap a same character from a third segment. Merged length = len(segment1) + 1 + len(segment2)
+ *  2. There does not exist a third segment with same character, swap a character from the first character of the first segment,
+ *  or swapping the last character from the second segment, to the separating index. Merged length = len(segment1) + len(segment2)
+ *  Otherwise, if there are multiple segments of a character but they are not neighbor, we can only swap a character from one to the other.
+ *  New length = len(segment) + 1
+ *
+
 Solution1:
 class Solution {
     public int maxRepOpt1(String text) {
