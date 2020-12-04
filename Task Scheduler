@@ -1,0 +1,35 @@
+Solution1:
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        
+        
+        int[] counts = new int[26];
+        //Find the frequency of each task 
+        for(int i=0;i<tasks.length;i++)
+            counts[tasks[i]-'A']++;
+        
+        //Sort the array to find the max frequency of tasks
+        Arrays.sort(counts);
+        
+        //Max frequency will be at the end of array-since sorted in ascending order
+        int max_freq = counts[counts.length-1];
+        //calculate maximum possible idle_time Ex: AAAB
+        int idle_time = (max_freq-1)*n;
+        
+        //Check the idle time left by filling other tasks in the idle_time
+        //we can have a  task maximum occupy max_freq-1 slots or its frequency
+        // Examples : AAABC , AABBCC AABBCCD
+        for(int i=counts.length-2;i>=0 && idle_time>0;i--)
+            idle_time = idle_time-Math.min(max_freq-1,counts[i]);
+       
+        //If all the idle time is used and when overflow then the idle time might go negative
+        //In this case make idle_time as 0
+        if (idle_time < 0)
+            idle_time = 0;
+        //return the answer
+        return tasks.length+idle_time;
+        
+    }
+}
+
+Solution2:
