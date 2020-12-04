@@ -1,3 +1,5 @@
+https://leetcode.com/problems/task-scheduler/
+
 Solution1:
 class Solution {
     public int leastInterval(char[] tasks, int n) {
@@ -33,3 +35,33 @@ class Solution {
 }
 
 Solution2:
+
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        
+        
+        int[] counts = new int[26];
+        //Find the frequency of each task 
+        for(int i=0;i<tasks.length;i++)
+            counts[tasks[i]-'A']++;
+        
+        //Sort the array to find the max frequency of tasks
+        Arrays.sort(counts);
+        
+        //Max frequency will be at the end of array-since sorted in ascending order
+        int max_freq = counts[counts.length-1];
+        
+        //Find how many max frequency tasks are present
+        
+        int ftasks=0;
+        for(int i = counts.length-1;i>=0;i--)
+            if (counts[i] == max_freq)
+                ftasks++;
+        
+        //we have maxfreq-1 blocks and each block has n+1 tasks followed by number of  max frequency task
+   
+        //return the answer
+        return Math.max(tasks.length,(max_freq-1)*(n+1) + ftasks);
+        
+    }
+}
