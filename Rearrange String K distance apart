@@ -1,0 +1,39 @@
+https://leetcode.com/problems/rearrange-string-k-distance-apart/
+
+Solution:
+class Solution {
+    public String rearrangeString(String s, int k) {
+        
+        if(k == 0)
+            return s;
+        
+        //Get frequency of characters
+        HashMap<Character,Integer> freqMap = new HashMap<>();
+        char[] sA = s.toCharArray();
+        for(int i=0;i<sA.length;i++)
+            freqMap.put(sA[i],freqMap.getOrDefault(sA[i],0)+1);
+        
+        //Maxheap to maintain order of characters processed
+        PriorityQueue<Map.Entry<Character,Integer>> queue = new PriorityQueue<Map.Entry<Character,Integer>>((a,b)->(b.getValue()-a.getValue()));
+        
+        queue.addAll(freqMap.entrySet());
+        
+        StringBuilder res = new StringBuilder();
+        Queue<Map.Entry<Character,Integer>> waitQueue = new LinkedList<>();
+        while(!queue.isEmpty())
+        {
+            Map.Entry<Character,Integer> tmp = queue.remove();
+            tmp.setValue(tmp.getValue()-1);
+            res.append(tmp.getKey());
+            waitQueue.add(tmp);
+            
+            if(waitQueue.size() < k)
+                continue;
+      
+         Map.Entry<Character,Integer> entry = waitQueue.remove();
+         if(entry.getValue() > 0)
+                    queue.add(entry);
+        }
+        return res.length() != sA.length ? "":res.toString();
+    }
+}
