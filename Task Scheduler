@@ -34,6 +34,37 @@ class Solution {
     }
 }
 
+Solution2:
+
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        
+        
+        int[] counts = new int[26];
+        //Find the frequency of each task 
+        for(int i=0;i<tasks.length;i++)
+            counts[tasks[i]-'A']++;
+        
+        //Sort the array to find the max frequency of tasks
+        Arrays.sort(counts);
+        
+        //Max frequency will be at the end of array-since sorted in ascending order
+        int max_freq = counts[counts.length-1];
+        
+        //Find how many max frequency tasks are present
+        
+        int ftasks=0;
+        for(int i = counts.length-1;i>=0;i--)
+            if (counts[i] == max_freq)
+                ftasks++;
+        
+        //we have maxfreq-1 blocks and each block has n+1 tasks followed by number of  max frequency task
+   
+        //return the answer
+        return Math.max(tasks.length,(max_freq-1)*(n+1) + ftasks);
+        
+    }
+}
 Solution3: Using Priority Queue
 
 class Solution {
@@ -89,94 +120,5 @@ class Solution {
 }
 
 Solution4: ( To print tasks)
-class Solution {
-    public int leastInterval(char[] tasks, int n) {
-        
-        //No cooling time Needed
-        if (n == 0)
-            return tasks.length;
-        
-        //Find max freq tasks
-        HashMap<Character,Integer> hm = new HashMap<>();
-        for(int i=0;i<tasks.length;i++)
-            hm.put(tasks[i],hm.getOrDefault(tasks[i],0)+1);
-        
-        //Sort the tasks by max frequency always - Max heap
-        PriorityQueue<Map.Entry<Character,Integer>> queue = new PriorityQueue<>((a,b) -> (b.getValue()-a.getValue()));
-        queue.addAll(hm.entrySet());
-        
-        //Fina CPU time 
-        int count = 0;
-        
-        //Start processing tasks
-        while(!queue.isEmpty())
-        {
-        //Interval is task + cooltime (A__A) (A__ is one Interval) (For task A to be repeated we need cool of n)
-            int interval = n+1;
-            //Process the specific interval with tasks
-            List<Map.Entry<Character,Integer>> tmplist = new ArrayList<>();
-            while(interval > 0 && !queue.isEmpty())
-            {
-                Map.Entry<Character,Integer> tmp = queue.remove();
-                tmp.setValue(tmp.getValue()-1);
-                tmplist.add(tmp);
-                System.out.print(tmp.getKey());
-                interval--;
-                count++;
-            }
-            
-            //Add the tasks to be processesed again
-            for(Map.Entry<Character,Integer> entry : tmplist)
-            {
-                if(entry.getValue() > 0)
-                    queue.add(entry);
-            }
-            
-            if(queue.isEmpty())
-                break;
-            
-            //Add the idle time 
-           // count = count + interval;
-            while(interval-- > 0)
-            {
-                count++;
-                System.out.print("I");
-                
-            }
-                
-        }
-        return count;      
-    }
-}
+https://github.com/shankarpentyala07/DS/blob/master/Rearrange%20String%20K%20distance%20apart
 
-Solution2:
-
-class Solution {
-    public int leastInterval(char[] tasks, int n) {
-        
-        
-        int[] counts = new int[26];
-        //Find the frequency of each task 
-        for(int i=0;i<tasks.length;i++)
-            counts[tasks[i]-'A']++;
-        
-        //Sort the array to find the max frequency of tasks
-        Arrays.sort(counts);
-        
-        //Max frequency will be at the end of array-since sorted in ascending order
-        int max_freq = counts[counts.length-1];
-        
-        //Find how many max frequency tasks are present
-        
-        int ftasks=0;
-        for(int i = counts.length-1;i>=0;i--)
-            if (counts[i] == max_freq)
-                ftasks++;
-        
-        //we have maxfreq-1 blocks and each block has n+1 tasks followed by number of  max frequency task
-   
-        //return the answer
-        return Math.max(tasks.length,(max_freq-1)*(n+1) + ftasks);
-        
-    }
-}
