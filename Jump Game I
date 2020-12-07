@@ -1,0 +1,23 @@
+https://leetcode.com/problems/jump-game/
+
+Solution1:
+class Solution {
+    public boolean canJump(int[] nums) {
+        int finish = nums.length-1;
+        int currmax=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            //Maximum we can reach at every index
+            currmax = Math.max(i+nums[i],currmax);
+            //Did we reach or crossed the last index?
+            if(currmax >= finish)
+                return true;
+            //We did not get past the current index,so can't reach next index
+            if(currmax <= i)
+                return false;
+        }
+        
+        return false;      
+        
+    }
+}
