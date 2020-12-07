@@ -1,0 +1,26 @@
+https://leetcode.com/problems/jump-game-ii/
+Solution:
+class Solution {
+    public int jump(int[] nums) {
+        
+    //At every point if we know the min num of jumps needed to reach that point,then
+    //we can get to know the minimum number of jumps needed to reach the final point
+        
+        if(nums.length < 2)
+            return 0;
+        
+        int n = nums.length;
+        //To store the minimum number of jumps 
+        int[] jumps = new int[n];
+        for(int i=0;i<n;i++)
+        {
+            //Minimum so that we don't run out of array bound (i+nums[i] can be greater than length of array)
+            int min = Math.min(i+nums[i],n-1);
+            //Fill all the positions we can reach
+            while(min >=0 && jumps[min] == 0)
+                jumps[min--] = jumps[i]+1;            
+        }
+        //Return the jumps needed to reach final element
+        return jumps[n-1];
+    }
+}
