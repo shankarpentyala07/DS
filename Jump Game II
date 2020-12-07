@@ -24,3 +24,25 @@ class Solution {
         return jumps[n-1];
     }
 }
+
+Solution2:(Without any space)
+
+class Solution {
+    public int jump(int[] nums) {
+        
+        if(nums.length < 2)
+            return 0;
+        int jumps =0,maxPos=0,maxSteps=0;
+        for(int i=0;i<nums.length;i++)
+        {           
+            if(maxSteps < i)
+            {
+                jumps++;
+                maxSteps = maxPos;
+            }
+            maxPos = Math.max(i+nums[i],maxPos);
+        }
+        
+        return jumps;
+    }
+}
