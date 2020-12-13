@@ -103,3 +103,47 @@ public String longestPalindrome(String s) {
      }
 
 Base idea: https://www.youtube.com/watch?v=UflHuQj6MVA
+
+DP in more clear code:
+
+class Solution {
+   public String longestPalindrome(String s) {
+        if(s == null || s.length() < 2)
+            return s;
+        int len = s.length();
+        boolean dp[][] = new boolean[len][len];
+        int sindex =0,eindex=0;
+       
+       //single letters
+       for(int i=0;i<len;i++)
+           dp[i][i] = true;
+       
+        //Two Length String
+       for(int i=0;i<len-1;i++)
+       {
+           if(s.charAt(i) == s.charAt(i+1))
+           {
+               dp[i][i+1] = true;
+               sindex = i;
+               eindex = i+1;
+           }
+               
+           
+       }
+        //Three Length string
+       // (0,2) ->(0-2 length is 3 thats why we start with 2)
+        for(int size=2;size<len;size++)
+        {
+            for(int i=0;i+size < len;i++)
+            {
+              if (s.charAt(i) == s.charAt(i+size) && dp[i+1][i+size-1])
+                {
+                    dp[i][i+size] = true;
+                    sindex = i;
+                    eindex = i+size;
+                }
+              } 
+        }
+        return s.substring(sindex,eindex+1);
+     }
+}
