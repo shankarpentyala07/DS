@@ -1,0 +1,41 @@
+https://leetcode.com/problems/lru-cache/
+
+Solution1: LinkedHashMap
+class LRUCache {
+     Map<Integer,Integer> hm;
+    int size;
+    public LRUCache(int capacity) {
+        size = capacity;
+        hm = new LinkedHashMap<>();
+    }
+    
+    public int get(int key) {
+        if(hm.containsKey(key))
+        {
+            int val = hm.get(key);
+            hm.remove(key);
+            hm.put(key,val);
+            return val;
+        }
+            
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        
+        if(hm.containsKey(key))
+            hm.remove(key);
+         hm.put(key,value);
+        if(hm.size() > size)
+        {
+            int tmp = hm.keySet().iterator().next();
+            hm.remove(tmp);
+        }
+        
+    }
+}
+
+Solution2:
+(Doubly LinkedList + HashMap)
+
+
