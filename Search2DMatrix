@@ -1,0 +1,67 @@
+https://leetcode.com/problems/search-a-2d-matrix/
+Solution1: (Consider as 1d array and perform binary search - Thats how n-dimensional arrays are stored in ram)
+class Solution {
+  public boolean searchMatrix(int[][] matrix, int target) {
+      
+      if(matrix == null ||matrix.length == 0)
+          return false;
+      
+      int m = matrix.length , n =  matrix[0].length;
+      int start = 0, end = m*n - 1;
+      
+      while(start <= end)
+      {
+          int mid = start + (end-start)/2;
+          
+          if(matrix[mid/n][mid % n] == target)
+              return true;
+          else if (matrix[mid/n][mid % n] < target)
+              start = mid+1;
+          else 
+              end = mid-1;
+      }
+      
+      return false;
+  }
+}
+
+Time: O(log(mn))
+Space: O(1)
+
+Solution2:
+(Find which row the target belongs to and perform a binarysearch for that row:
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        
+        if(matrix == null || matrix.length == 0)
+            return false;
+        
+        int rows=matrix.length,cols = matrix[0].length;
+        int i=0;
+        while(i<rows)
+        {
+           // System.out.println(matrix[i][cols-1]);
+            if(matrix[i][cols-1] >= target)
+                break;
+            i++;
+        }
+        
+        if(i<rows)
+        {
+            int l=0,r=cols-1;
+            while(l<=r)
+            {
+                int mid = l +(r-l)/2;
+                if(matrix[i][mid] == target)
+                    return true;
+                else if(matrix[i][mid] < target)
+                    l=mid+1;
+                else
+                    r=mid-1;
+            }
+        }
+        
+        return false;
+    }
+}
