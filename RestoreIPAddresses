@@ -1,5 +1,44 @@
 https://leetcode.com/problems/restore-ip-addresses/
 Solution 1:
+class Solution {
+    
+    public boolean isValid(String s)
+    {
+        if(s.length() == 0 || s.length() > 3 || (s.charAt(0) == '0' && s.length()>1) || Integer.parseInt(s) > 255)
+            return false;
+        return true;
+    }
+    public List<String> restoreIpAddresses(String s) {
+        
+        List<String> res = new ArrayList<String>();
+        if(s.length() < 4)
+            return res;
+        int len = s.length();
+        
+        for(int i=1;i<=3;i++)
+        {
+            for(int j=i+1;j<i+4;j++)
+            {
+                for(int k=j+1;k<j+4 && k <len;k++)
+                {
+                    String s1 =  s.substring(0,i);
+                    String s2= s.substring(i,j);
+                    String s3 = s.substring(j,k);
+                    String s4 = s.substring(k);
+                    
+                    if(isValid(s1) && isValid(s2) && isValid(s3) && isValid(s4))
+                        res.add(s1 + "." + s2 + "." + s3 + "." + s4);
+                    
+                }
+            }
+        }
+        return res;
+    }
+    
+}
+
+
+(Same as Solution1)
 public class Solution {
     public List<String> restoreIpAddresses(String s) {
         List<String> res = new ArrayList<String>();
@@ -23,4 +62,56 @@ public class Solution {
     }
 }
 
+Time Complexity:
+The naive solution would be to brute-force, i.e. to check all possible positions for the dots and keep only the valid ones. 
+In the worst case that means 11 possible positions and hence 11 \times 10 \times 9 = 99011×10×9=990 validations.
+That could be optimized with the help of two conceptions.The first one is called constrained programming.
+That basically means to put restrictions after each dot placement.
+If one already put a dot that leaves only 3 possibilities for the next dot to be placed : after one digit, after two digits, or after three digits. 
+The first dot has only 3 available slots as well.
+
+That propagates constraints and helps to reduce a number of combinations to consider. Instead of 990990 combinations it's enough to check just 3* 3* 3 = 27
+
+---------------------------*************------
+ 
 Solution2: (BackTracking)
+
+
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        ArrayList<String> res = new ArrayList<>();
+        helper(res,new StringBuilder(),s,0,0);
+        return res;
+    }
+    //start: starting index, count: numbers added into stringbuilder
+    public void helper(List<String> res, StringBuilder temp, String s,int start, int count){
+        // if we are at the end and added 4 elements, add to result
+        if (start==s.length() && count==4) 
+            res.add(temp.toString());
+        // if we are not at the end and already has 4 elements-> invalid
+        else if (count==4) return;
+        
+        for(int i=start; i<s.length(); i++){
+            String curr = s.substring(start,i+1);
+            int value = Integer.parseInt(curr);
+            // check whether the number is like "0010" or "00";
+            if (curr.length()>1 && curr.charAt(0)=='0') return;
+            // out of range
+            if (value>255) return;
+            // less or equal to 255
+            if (value<=255 && value>=0){
+                // Backtracking
+                StringBuilder rollback = new StringBuilder(temp);
+                temp.append(s.substring(start,i+1));
+                if (count<3) temp.append(".");
+                
+                helper(res,temp,s,i+1,count+1);
+                // Rollback to previous state
+                temp = rollback;
+            }
+        }
+    }
+    
+}
+
+BackTracking Template: https://leetcode.com/problems/permutations/discuss/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)
