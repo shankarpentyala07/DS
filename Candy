@@ -32,4 +32,5 @@ class Solution {
 
 Time:O(n)
 Space: O(n)
+Note: You can calculate the total in the second loop itself,No need to have an extra loop
 
