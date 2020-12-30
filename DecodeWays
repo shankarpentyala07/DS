@@ -32,7 +32,7 @@ class Solution {
         if (s == null || s.length() == 0)
             return 0;
         return helper(s,0);
-        
+         
     }
 }
 Time: O(N)
