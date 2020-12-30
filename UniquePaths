@@ -1,0 +1,45 @@
+https://leetcode.com/problems/unique-paths/
+
+Solution1: (Recursion With Memoziation)
+
+class Solution {
+    
+    public int uniquePaths(int m, int n,int[][] seen) { 
+    if(seen[m][n] != 0)
+            return seen[m][n];
+        
+        if(m< 1 || n< 1)
+            return 0;
+        
+       int count = uniquePaths(m-1,n,seen) + uniquePaths(m,n-1,seen);
+        seen[m][n] = count;
+        return count;
+    }
+    
+    public int uniquePaths(int m, int n) {            
+        int[][] seen = new int[m+1][n+1];
+        seen[1][1] = 1;
+        return uniquePaths(m,n,seen);
+    }
+}
+
+Solution2:
+ public class Solution {
+    public int uniquePaths(int m, int n) {
+        Integer[][] map = new Integer[m][n];
+        for(int i = 0; i<m;i++){
+            map[i][0] = 1;
+        }
+        for(int j= 0;j<n;j++){
+            map[0][j]=1;
+        }
+        for(int i = 1;i<m;i++){
+            for(int j = 1;j<n;j++){
+                map[i][j] = map[i-1][j]+map[i][j-1];
+            }
+        }
+        return map[m-1][n-1];
+    }
+}
+
+
