@@ -1,0 +1,43 @@
+https://leetcode.com/problems/fibonacci-number/
+
+Its a DP Problem:
+Solution1: Recursion With Memoization:
+class Solution {
+    HashMap<Integer,Integer> seen = new HashMap<>();
+    public int fib(int n) {
+        if(n==0)
+            return 0;
+        if(n==1)
+            return 1;
+        if(seen.containsKey(n))
+            return seen.get(n);
+        int fibn = fib(n-1) + fib(n-2);
+        seen.put(n,fibn);
+        return fibn;
+        
+    }
+}
+
+Dynamic Programming:
+class Solution {
+    public int fib(int n) {
+        
+        if(n==0 || n==1)
+            return n;
+        int n0=0,n1=1;
+        int res=0;
+        while(n-- > 1)
+        {
+            res = n1+n0;
+            n0=n1;
+            n1=res;
+        }
+        
+        return res;
+            
+        
+        
+    }
+}
+
+
