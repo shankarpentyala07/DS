@@ -1,0 +1,228 @@
+https://www.educative.io/courses/grokking-the-coding-interview/gkZNLjV2kBk
+
+Recursive Approach:
+class Knapsack {
+
+  public int solveKnapsack(int[] profits, int[] weights, int capacity) {
+    return this.knapsackRecursive(profits, weights, capacity, 0);
+  }
+
+  private int knapsackRecursive(int[] profits, int[] weights, int capacity, int currentIndex) {
+    // base checks
+    if (capacity <= 0 || currentIndex >= profits.length)
+      return 0;
+
+    // recursive call after choosing the element at the currentIndex
+    // if the weight of the element at currentIndex exceeds the capacity, we shouldn't process this
+    int profit1 = 0;
+    if( weights[currentIndex] <= capacity )
+        profit1 = profits[currentIndex] + knapsackRecursive(profits, weights,
+                capacity - weights[currentIndex], currentIndex + 1);
+
+    // recursive call after excluding the element at the currentIndex
+    int profit2 = knapsackRecursive(profits, weights, capacity, currentIndex + 1);
+
+    return Math.max(profit1, profit2);
+  }
+
+  public static void main(String[] args) {
+    Knapsack ks = new Knapsack();
+    int[] profits = {1, 6, 10, 16};
+    int[] weights = {1, 2, 3, 5};
+    int maxProfit = ks.solveKnapsack(profits, weights, 7);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+    maxProfit = ks.solveKnapsack(profits, weights, 6);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+  }
+}
+
+
+Time : O(2^N)
+Space: O(N) - Max depth of Recursion
+
+Recursive Approach with Memoization (Because Of overlapping subproblems): (Top-Bottom Approach)
+class Knapsack {
+
+
+  public int helper(int[] profits,int[] weights,int capacity,int start,Integer[][] dp)
+  {
+
+    if(capacity <= 0 || start == profits.length)
+	    return 0;
+
+      if(dp[start][capacity] != null)
+        return dp[start][capacity];
+	    int profit1=0;
+	    if(capacity >= weights[start])
+	    {
+	    	profit1 = profits[start] + helper(profits,weights,capacity-weights[start],start+1,dp);
+	    	
+	    }
+	    int profit2 = helper(profits,weights,capacity,start+1,dp);
+        dp[start][capacity] = Math.max(profit1,profit2);
+        return dp[start][capacity];
+  }
+  public int solveKnapsack(int[] profits, int[] weights, int capacity) {
+    // TODO: Write your code here
+    Integer[][] dp = new Integer[profits.length][capacity+1];
+    return helper(profits,weights,capacity,0,dp);
+  }
+
+  public static void main(String[] args) {
+    Knapsack ks = new Knapsack();
+    int[] profits = {1, 6, 10, 16};
+    int[] weights = {1, 2, 3, 5};
+    int maxProfit = ks.solveKnapsack(profits, weights, 7);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+    maxProfit = ks.solveKnapsack(profits, weights, 6);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+  }
+}
+
+Time: O(N*C) 
+Since our memoization array dp[profits.length][capacity+1] stores the results for all subproblems, 
+we can conclude that we will not have more than N*C subproblems (where ‘N’ is the number of items and ‘C’ is the knapsack capacity). 
+This means that our time complexity will be O(N*C).
+The above algorithm will use O(N*C) space for the memoization array. Other than that, we will use O(N) space for the recursion call-stack. 
+So the total space complexity will be O(N*C + N), which is asymptotically equivalent to O(N*C).
+
+Solution3: (Bottom-up Approach)
+class Knapsack {
+
+  public int solveKnapsack(int[] profits, int[] weights, int capacity) {
+    // basic checks
+    if (capacity <= 0 || profits.length == 0 || weights.length != profits.length)
+      return 0;
+
+    int n = profits.length;
+    int[][] dp = new int[n][capacity + 1];
+
+    // populate the capacity=0 columns, with '0' capacity we have '0' profit
+    for(int i=0; i < n; i++)
+      dp[i][0] = 0;
+
+    // if we have only one weight, we will take it if it is not more than the capacity
+    for(int c=0; c <= capacity; c++) {
+      if(weights[0] <= c)
+        dp[0][c] = profits[0];
+    }
+
+    // process all sub-arrays for all the capacities
+    for(int i=1; i < n; i++) {
+      for(int c=1; c <= capacity; c++) {
+        int profit1= 0, profit2 = 0;
+        // include the item, if it is not more than the capacity
+        if(weights[i] <= c)
+          profit1 = profits[i] + dp[i-1][c-weights[i]];
+        // exclude the item
+        profit2 = dp[i-1][c];
+        // take maximum
+        dp[i][c] = Math.max(profit1, profit2);
+      }
+    }
+
+    // maximum profit will be at the bottom-right corner.
+    return dp[n-1][capacity];
+  }
+
+  public static void main(String[] args) {
+    Knapsack ks = new Knapsack();
+    int[] profits = {1, 6, 10, 16};
+    int[] weights = {1, 2, 3, 5};
+    int maxProfit = ks.solveKnapsack(profits, weights, 7);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+    maxProfit = ks.solveKnapsack(profits, weights, 6);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+  }
+}
+
+Time and Space complexity #
+The above solution has the time and space complexity of O(N*C), where ‘N’ represents total items, and ‘C’ is the maximum capacity.
+
+Explanation:
+Let’s try to populate our dp[][] array from the above solution by working in a bottom-up fashion. Essentially, we want to find the maximum profit for 
+every sub-array and every possible capacity. This means that dp[i][c] will represent the maximum knapsack profit for capacity ‘c’ calculated from the 
+first ‘i’ items.
+
+So, for each item at index ‘i’ (0 <= i < items.length) and capacity ‘c’ (0 <= c <= capacity), we have two options:
+
+Exclude the item at index ‘i.’ In this case, we will take whatever profit we get from the sub-array excluding this item => dp[i-1][c]
+Include the item at index ‘i’ if its weight is not more than the capacity. In this case, we include its profit plus whatever profit we get from the remaining 
+capacity and from remaining items => profit[i] + dp[i-1][c-weight[i]]
+Finally, our optimal solution will be maximum of the above two values:
+
+    dp[i][c] = max (dp[i-1][c], profit[i] + dp[i-1][c-weight[i]]) 
+    
+    
+    Solution4:(To print the weights correspondng to max Profit)
+
+import java.util.*;
+
+class Knapsack {
+
+  public int solveKnapsack(int[] profits, int[] weights, int capacity) {
+    // base checks
+    if (capacity <= 0 || profits.length == 0 || weights.length != profits.length)
+      return 0;
+
+    int n = profits.length;
+    int[][] dp = new int[n][capacity + 1];
+
+    // populate the capacity=0 columns, with '0' capacity we have '0' profit
+    for(int i=0; i < n; i++)
+      dp[i][0] = 0;
+
+    // if we have only one weight, we will take it if it is not more than the capacity
+    for(int c=0; c <= capacity; c++) {
+      if(weights[0] <= c)
+        dp[0][c] = profits[0];
+    }
+
+    // process all sub-arrays for all the capacities
+    for(int i=1; i < n; i++) {
+      for(int c=1; c <= capacity; c++) {
+        int profit1= 0, profit2 = 0;
+        // include the item, if it is not more than the capacity
+        if(weights[i] <= c)
+          profit1 = profits[i] + dp[i-1][c-weights[i]];
+        // exclude the item
+        profit2 = dp[i-1][c];
+        // take maximum
+        dp[i][c] = Math.max(profit1, profit2);
+      }
+    }
+
+    printSelectedElements(dp, weights, profits, capacity);
+    // maximum profit will be at the bottom-right corner.
+    return dp[n-1][capacity];
+  }
+
+ private void printSelectedElements(int dp[][], int[] weights, int[] profits, int capacity){
+   System.out.print("Selected weights:");
+   int totalProfit = dp[weights.length-1][capacity];
+   for(int i=weights.length-1; i > 0; i--) {
+     if(totalProfit != dp[i-1][capacity]) {
+       System.out.print(" " + weights[i]);
+       capacity -= weights[i];
+       totalProfit -= profits[i];
+     }
+   }
+
+   if(totalProfit != 0)
+     System.out.print(" " + weights[0]);
+   System.out.println("");
+ }
+
+  public static void main(String[] args) {
+    Knapsack ks = new Knapsack();
+    int[] profits = {1, 6, 10, 16};
+    int[] weights = {1, 2, 3, 5};
+    int maxProfit = ks.solveKnapsack(profits, weights, 7);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+    maxProfit = ks.solveKnapsack(profits, weights, 6);
+    System.out.println("Total knapsack profit ---> " + maxProfit);
+  }
+}
+
+
+
