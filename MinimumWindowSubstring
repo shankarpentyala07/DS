@@ -1,0 +1,119 @@
+https://leetcode.com/problems/minimum-window-substring/
+Solution1:
+class Solution {
+    public String minWindow(String s, String t) {
+        int slen = s.length();
+        int tlen = t.length();
+        if(tlen > slen)
+            return "";
+        int wStart=0,wEnd =0;
+        int minlen = slen + 1;
+        HashMap<Character,Integer> tMap = new HashMap<>();
+        
+        for(int i=0;i<tlen;i++)
+        {
+            char ch = t.charAt(i);
+            tMap.put(ch,tMap.getOrDefault(ch,0)+1);
+        }
+        
+        HashMap<Character,Integer> wMap = new HashMap<>();
+        int required = tMap.size();
+        int formed = 0;
+        String res="";
+        while(wEnd < slen )
+        {
+            char ch = s.charAt(wEnd);
+            
+            wMap.put(ch,wMap.getOrDefault(ch,0)+1);
+            if(tMap.containsKey(ch) && wMap.get(ch).intValue() == tMap.get(ch).intValue())
+                formed++;
+            
+            while(formed == required)
+            {
+                if(wEnd-wStart+1 < minlen)
+                {
+                    minlen = wEnd-wStart+1;
+                    res = s.substring(wStart,wEnd+1);
+                }
+                char chleft = s.charAt(wStart);
+                wMap.put(chleft,wMap.get(chleft)-1);
+                if(tMap.containsKey(chleft) && wMap.get(chleft).intValue() < tMap.get(chleft).intValue())
+                    formed--;
+                wStart++;
+            }
+            
+            wEnd++;
+      
+        }
+        
+        return res;
+    }
+}
+
+Solution2:
+class Solution {
+    public String minWindow(String A, String B) {
+        int p[] = new int[256]; 
+        int s[] = new int[256]; 
+        String res = "";
+        //System.out.println(p[B.charAt(0)]);
+        for (int i = 0; i < B.length(); i++) 
+            p[B.charAt(i)]++; 
+        int wStart = 0,  min = Integer.MAX_VALUE; 
+        int count = 0; 
+        for (int j = 0; j < A.length(); j++){ 
+            s[A.charAt(j)]++; 
+            if (s[A.charAt(j)] <= p[A.charAt(j)] ) 
+                count++; 
+            
+            if(count == B.length())
+            {
+                while(s[A.charAt(wStart)] > p[A.charAt(wStart)])
+                {
+                   s[A.charAt(wStart)]--; 
+                   wStart++; 
+                }
+                
+                if(j-wStart+1 < min)
+                {
+                    min = j-wStart+1;
+                    res = A.substring(wStart,j+1);
+                }
+                    
+            }
+        }
+        return res; 
+    }
+}
+
+Solution3:
+class Solution {
+    public String minWindow(String s, String t) {
+        int[] freq = new int[128];
+        int count = t.length();
+        int len = Integer.MAX_VALUE;
+        int start = 0;
+        for(char c:t.toCharArray())
+            freq[c]++;
+        for(int lo=0,hi=0;hi<s.length();hi++){
+            char c = s.charAt(hi);
+            if(freq[c] >0){
+                count--;
+            }
+            freq[c]--;
+            while(count == 0){
+                char ch = s.charAt(lo);
+                freq[ch]++;
+                if(freq[ch] > 0){
+                    if(hi-lo+1 < len){
+                        len = hi-lo+1;
+                        start = lo;
+                    }
+                    count++;
+                }
+                lo++;
+            }
+        }
+        return len == Integer.MAX_VALUE ? "" : s.substring(start,start+len);
+    }
+}
