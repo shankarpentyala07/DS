@@ -1,0 +1,131 @@
+https://leetcode.com/problems/snakes-and-ladders/
+
+Solution1:
+class Solution {
+    public int snakesAndLadders(int[][] board) {
+        
+        int r = board.length;
+        int max = r*r;        
+        Map<Integer,Integer> hm = new HashMap<>();
+        int idx=1;
+        int i=r-1;
+        while(i>=0)
+        {
+            for(int j=0;j<r;j++)
+                hm.put(idx++,board[i][j]);
+            i--;
+            if(i < 0)
+                break;
+            for(int j=r-1;j>=0;j--)
+                hm.put(idx++,board[i][j]);
+            i--;
+        }
+        
+        // for(int key : hm.keySet())
+        //     System.out.println(key + ":" + hm.get(key));
+        
+        Queue<Integer> queue = new LinkedList<Integer>();
+        queue.add(1);
+        Set<Integer> seen = new HashSet<Integer>();
+        seen.add(1);
+        int count=0;
+        while(!queue.isEmpty())
+        {
+            int size = queue.size();
+            count++;
+            while(size-- > 0)
+            {
+                int square = queue.remove();
+                seen.add(square);
+                for(i=1;i<=6;i++)
+                {
+                    if(hm.containsKey(square+i))
+                    {
+                            int val = hm.get(square+i);
+                            if(square+i == max || val == max)
+                                return count;
+                            if (val== -1)
+                                val = square+i ; 
+                      
+                               if(!seen.contains(val))
+                                {
+                                    queue.add(val);
+                                   seen.add(val);
+                                }   
+                        }
+                    }
+                }
+                    
+            }
+        
+        return -1;
+        }
+}
+
+Solution2:
+class Solution {
+
+/* Actual 2*2  Board
+    1 2
+    3 4
+  
+Snake and Ladder Board 2*2 Board
+    4 3
+    1 2
+*/
+   
+
+    public int snakesAndLadders(int[][] board) {
+        
+        //Find the number of rows in the board
+        int N = board.length;
+        
+        //HashMap to track the number of jumps to reach a position
+        HashMap<Integer,Integer> distMap = new HashMap<Integer,Integer>();
+        //Since we start at 1 in the board,jumps needed is 0
+        distMap.put(1,0);
+        
+        //The question is to find the minimum number of jumps,Hence breadth first search and queue
+        Queue<Integer> queue = new LinkedList<Integer>();
+        //Store the start 1 in the queue
+        queue.add(1);
+        
+        //Start BFS
+        while(!queue.isEmpty())
+        {
+            int rc = queue.remove();
+            
+            //Traverse the next six possible jumps
+            for(int i=rc+1;i<= Math.min(N*N,rc+6);i++)
+            {
+                //Actual row,column Ex: 1 corresponds to 0,0 and 2 corresponds to 0,1 and 3 corresponds to 1,0 and 
+                // 4 corresponds to 1,1 in a 2*2 board
+
+                int r = (i-1) / N;
+                int c = (i-1) % N;
+                
+                //Snake and Ladder Board Mapping
+                //1st row corresponds to last row and 2nd row corrresponds to But one last row
+                int nr = (N-1)-r;
+                //The columns for last row are left to right and last but one row are right to left
+                int nc = ((N-1)-nr) % 2 == 0? c: N-1-c;
+             
+                //Fetch the jump destination ,As per question if value is -1,then jump to that value or else to value in board[r][c]
+                int val = board[nr][nc] != -1 ? board[nr][nc] : i;
+               
+                //If reached final position
+                if(val == N*N)
+                    return distMap.get(rc) + 1;
+                
+                //If not seen earlier ,then only add the value and its distance
+                if(!distMap.containsKey(val))
+                {
+                    distMap.put(val,distMap.get(rc) + 1);
+                    queue.add(val);
+                }
+            }
+        }
+        
+        return -1;
+    }
+}
