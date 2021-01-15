@@ -1,0 +1,119 @@
+Hi All,
+Recently I had an OA from a FAANG company. I wanted to share the questions and answers to those questions. Please let me know your opinions and code improvements.
+
+The 1st question was Transaction logs.
+
+A Company parses logs of online store user transactions/activity to flag fraudulent activity.
+
+The log file is represented as an Array of arrays. The arrays consist of the following data:
+
+[ <# of transactions>]
+
+For example:
+
+[345366 89921 45]
+
+Note: the data is space delimited
+
+So, the log data would look like:
+
+[
+[345366 89921 45],
+[029323 38239 23]
+...
+]
+Write a function to parse the log data to find distinct users that meet or cross a certain threshold.
+
+The function will take in 2 inputs:
+logData: Log data in form an array of arrays
+
+threshold: threshold as an integer
+
+Output:
+It should be an array of userids that are sorted.
+
+If same userid appears in the transaction as userid1 and userid2, it should count as one occurrence, not two.
+
+Example:
+Input:
+logData:
+
+[
+[345366 89921 45],
+[029323 38239 23],
+[38239 345366 15],
+[029323 38239 77],
+[345366 38239 23],
+[029323 345366 13],
+[38239 38239 23]
+...
+]
+threshold: 3
+
+Output: [345366 , 38239, 029323]
+Explanation:
+Given the following counts of userids, there are only 3 userids that meet or exceed the threshold of 3.
+
+345366 -4 , 38239 -5, 029323-3, 89921-1
+
+Solution:
+
+HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+    for(String log : logs)
+    {
+        String[] arr = log.split(" ");
+        Integer val1 = map.getOrDefault(arr[0],0);
+        Integer val2 = map.getOrDefault(arr[1],0);
+
+        if(arr[0] == arr[1] && !map.containsKey(arr[0])) {
+            map.put(arr[0], 1);
+        }
+        else if(!map.containsKey(arr[0]) && !map.containsKey(arr[1])) {
+            map.put(arr[0], 1);
+            map.put(arr[1], 1);
+        }
+        else if(!map.containsKey(arr[1])) {
+            map.put(arr[1], 1);
+            map.put(arr[0], val1 + 1);
+        }
+        else if(!map.containsKey(arr[0])) {
+            map.put(arr[0], 1);
+            map.put(arr[1], val2 + 1);
+        }
+        else
+            map.put(arr[0], val1 + 1);
+            map.put(arr[1], val2 + 1);
+
+    }
+
+    Map<String, Integer> result = map.entrySet().stream().filter(m -> m.getValue() >= threshold )
+                                 .collect(Collectors.toMap(m -> m.getKey(), m -> m.getValue()));
+    String[] arr =  result.keySet().toArray(new String[0]);
+    Arrays.sort(arr);
+    return arr;
+
+This was probably a typo originally, but I think there should an arr[1] instead of arr[0] in the first else if for map.put so that it is
+
+else if(!map.containsKey(arr[0]) && !map.containsKey(arr[1])) {
+map.put(arr[0], 1);
+map.put(arr[1], 1);
+}
+
+
+---------------------------------------------------------------------
+
+Zombie in Matrix (Min hours to send file to all available servers) [Experienced]
+Critical Routers [New Grad | Experienced]
+Reorder Data in Log Files [Experienced]
+Partition Labels [Experienced]
+Treasure Island / Min Distance to Remove the Obstacle (BFS) [Experienced]
+Treasure Island II
+Find Pair With Given Sum [Experienced, Intern]
+Favorite Genres [New Grad]
+Count substrings with exactly K distinct chars [Intern]
+Max Of Min Altitudes [Intern]
+Longest Palindromic Substring [Intern]
+Min Cost to Connect All Nodes (a.k.a. Min Cost to Add New Roads)
+Min Cost to Repair Edges (MST)
+
