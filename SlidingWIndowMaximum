@@ -1,0 +1,150 @@
+https://leetcode.com/problems/sliding-window-maximum/
+
+Solution1:(Brute Force-TLE)
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        
+        int result[] = new int[nums.length-k+1];
+        int iresult=0;
+        int max = getMax(nums,0,k-1);
+        result[iresult] = nums[max];
+        for(int i=k;i<nums.length;i++)
+        {
+            if(nums[i] >= nums[max])
+            {
+                result[++iresult] = nums[i];
+                max=i;
+            }
+            else if(max >iresult && max < i)
+                result[++iresult] = nums[max];
+            else
+            {
+                max=getMax(nums,iresult+1,i);
+                result[++iresult] =nums[max];
+            }
+                
+        }
+        
+        return result;
+        
+    }
+    
+    public int getMax(int[] nums,int low,int high)
+    {
+        int max = low;
+        for(int i=low+1;i<=high;i++)
+            if (nums[i] > nums[max])
+                  max=i;
+        return max;
+    }
+}
+
+Time:O(NK)
+Space:O(1) exlcuding output
+
+Solution2: (prioityQueue)
+class Solution {
+    class Indexvalmap
+    {
+        int val;
+        int idx;
+        Indexvalmap(int val,int idx)
+        {
+            this.val = val;
+            this.idx = idx;
+        }
+    }
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        
+        PriorityQueue<Indexvalmap> pq = new PriorityQueue<>((a,b) -> (b.val-a.val));
+        int[] res = new int[nums.length-k+1];
+        int idx = 0,i=0;
+        Indexvalmap tmp;
+        
+        while(i<k)
+        {
+            pq.add(new Indexvalmap(nums[i],i));
+            i++;
+        }
+        
+        res[idx++] = pq.peek().val;
+        while(i<nums.length)
+        {
+            pq.add(new Indexvalmap(nums[i],i));
+            
+            while(pq.peek().idx < i-(k-1))
+                pq.remove();
+            
+            res[idx++] = pq.peek().val;
+            i++;
+        }
+        
+        return res;
+        
+    }
+}
+Time: O(Nlog(k))
+Space: O(k+1)
+
+Solution3:(Dequeue)
+Time:O(n)
+
+
+
+
+Solution 3- Arrays(Best)
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        //Basically the concept is to build left and right arrays as per window size
+        //The left arrray stores the max from directioon left in a block
+        //The right array stores the max from direction right in a block
+        //The max in a block is max(right[start],left[end])
+        int n = nums.length;
+        if(k*n == 0 )
+            return new int[0];
+        if(k==1)
+            return nums;
+        //Build left & rightarray
+        int[] left = new int[n];
+        int[] right = new int[n];
+        
+        int max = nums[0];
+        int i=0;
+        while(i< n)
+        {
+            int j=i;
+            max= nums[i];
+            for(;j<Math.min(i+k,n);j++)
+            {
+                left[j] = Math.max(max,nums[j]);
+                max=left[j];
+            }
+            
+            max = nums[j-1];
+            for(int k1=j-1;k1>=i;k1--)
+            {
+                right[k1] = Math.max(nums[k1],max);
+                max = right[k1];
+            }
+                
+            i=j;
+        }
+        
+        int[] res = new int[n-k+1];
+        int idx = 0;
+        
+        for(i=k-1;i<n;i++)
+        {
+            res[idx++] = Math.max(left[i],right[i-(k-1)]);
+        }
+        
+        return res;
+        
+        
+    }
+}
+
+Time: O(n)
+Space: O(n)
