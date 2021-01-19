@@ -1,0 +1,49 @@
+https://leetcode.com/problems/number-of-provinces/
+class Solution {
+    
+    public void dfs(Map<Integer,Set<Integer>> graph,Set<Integer> seen,int node)
+    {
+        seen.add(node);
+        Set<Integer> nodes = graph.get(node);
+        for(int next : nodes)
+        {
+            if(!seen.contains(next))
+                dfs(graph,seen,next);
+        }
+    }
+    
+    public int findCircleNum(int[][] isConnected) {
+        
+        Map<Integer,Set<Integer>> graph = new HashMap<>();
+        
+        int n = isConnected.length;
+        
+        //Build a Graph
+        for(int i=0;i<n;i++)
+        {
+            Set<Integer> nodes = new HashSet<>();
+            graph.put(i,nodes);
+            for(int j=0;j<n;j++)
+            {
+                if(j==i)
+                    continue;
+                if(isConnected[i][j] == 1)
+                    graph.get(i).add(j);
+            }
+        }
+        
+        Set<Integer> seen = new HashSet<>();
+        int count = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(!seen.contains(i))
+            {
+                count++;
+              dfs(graph,seen,i);  
+            }
+                
+        }
+        
+        return count;
+    }
+}
