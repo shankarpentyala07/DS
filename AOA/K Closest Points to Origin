@@ -1,0 +1,82 @@
+https://leetcode.com/problems/k-closest-points-to-origin/
+
+Solution:
+https://leetcode.com/problems/k-closest-points-to-origin/discuss/220235/Java-Three-solutions-to-this-classical-K-th-problem.
+
+sol1:
+public int[][] kClosest(int[][] points, int K) {
+    Arrays.sort(points, (p1, p2) -> p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1]);
+    return Arrays.copyOfRange(points, 0, K);
+}
+
+sol2:
+
+public int[][] kClosest(int[][] points, int K) {
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((p1, p2) -> p2[0] * p2[0] + p2[1] * p2[1] - p1[0] * p1[0] - p1[1] * p1[1]);
+    for (int[] p : points) {
+        pq.offer(p);
+        if (pq.size() > K) {
+            pq.poll();
+        }
+    }
+    int[][] res = new int[K][2];
+    while (K > 0) {
+        res[--K] = pq.poll();
+    }
+    return res;
+}
+
+Sol3:
+class Solution {
+    
+    public void swap(int[][] points,int idx1,int idx2)
+    {
+        int[] tmp = points[idx1];
+        points[idx1] = points[idx2];
+        points[idx2] = tmp;
+        
+    }
+    
+    public int quicksort(int[][] points,int low,int mid,int high)
+    {
+        swap(points,mid,high);
+        int highdist = points[high][0]*points[high][0] + points[high][1]*points[high][1];
+        for(int i=low;i<high;i++)
+        {
+            int dist = points[i][0]*points[i][0] + points[i][1]*points[i][1];
+            if(dist < highdist)
+            {
+                swap(points,low,i);
+                low++;
+            }
+        }
+        swap(points,low,high);
+        return low;
+            
+        
+    }
+        
+    public int[][] kClosest(int[][] points, int K) {
+        
+        //Modified Quick sort
+        if(points.length <=1)
+            return points;
+        
+        int low = 0, high = points.length-1;
+        while(low < high)
+        {
+            int mid = low + (high-low)/2;
+            int key = quicksort(points,low,mid,high);
+            if(key == K-1)
+                break;
+            else if (key < K-1)
+                low = key+1;
+            else
+                high = key-1;
+        }
+        
+        
+        return Arrays.copyOfRange(points,0,K);
+        
+    }
+}
