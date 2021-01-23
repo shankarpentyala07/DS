@@ -1,0 +1,27 @@
+https://leetcode.com/problems/maximum-units-on-a-truck/
+class Solution {
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+        
+        Arrays.sort(boxTypes,(a,b) -> (b[1]-a[1]));
+        
+        int idx = 0;
+        int res=0;
+        while(truckSize > 0 && idx < boxTypes.length) 
+        {
+            if(truckSize - boxTypes[idx][0] > 0)
+            {
+                res += boxTypes[idx][0]*boxTypes[idx][1];
+                
+            }
+            else
+            {
+                res += truckSize*boxTypes[idx][1];
+            }
+              truckSize-= boxTypes[idx][0];  
+            idx++;
+                
+        }
+        
+        return res;
+    }
+}
