@@ -1,0 +1,72 @@
+https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/
+
+A string s is called good if there are no two different characters in s that have the same frequency.
+Given a string s, return the minimum number of characters you need to delete to make s good.
+The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab", the frequency of 'a' is 2, 
+while the frequency of 'b' is 1.
+
+
+Example 1:
+Input: s = "aab"
+Output: 0
+Explanation: s is already good.
+
+Solution:
+class Solution {
+    public int minDeletions(String s) {
+        int[] ch = new int[26];
+        for(char x: s.toCharArray()){
+            ch[x - 'a'] = ch[x -'a']+1;
+        }
+        int x = 0;
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0; i < 26;){
+            if(ch[i] != 0){
+                if(set.contains(ch[i])){
+                    ch[i]--;
+                    x++;
+                }
+                else
+                    set.add(ch[i++]);
+            }else
+                i++;
+        }
+        return x;
+    }
+}
+
+Time: O(n)
+Space: O(n) - String Length
+
+Solution2:
+class Solution {
+    public int minDeletions(String s) {
+        
+    Integer[] count = new Integer[26];
+        
+        Arrays.fill(count,0);
+        
+        for(char ch : s.toCharArray())
+            count[ch-'a']++;
+        
+        Arrays.sort(count,Collections.reverseOrder());
+        
+        int minDel = 0;
+        for(int i=0;i<25;i++)
+        {
+            int curr = count[i];
+            if(curr == 0)
+                break;
+            int j=i+1;        
+            while(j < 26 && count[j] == curr)
+            {
+                    count[j]--;
+                    minDel++;
+                    j++;
+            }   
+        }
+        
+        return minDel;
+    }
+}
+
