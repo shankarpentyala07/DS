@@ -17,7 +17,7 @@ Solution1:
         Arrays.sort(piles);
         int res = 0, distinctNums = 0;
         for(int i = 1; i < len; ++i){
-            if(piles[i] != piles[i - 1]){
+            if(piles[len-i-1] != piles[len-i]){
                 res += i;
             }
         }
