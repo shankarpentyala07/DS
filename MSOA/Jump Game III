@@ -1,0 +1,58 @@
+public boolean canReach(int[] arr, int start) {
+        
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        int n = arr.length;
+        boolean[] seen = new boolean[n];
+        seen[start] = true;
+        
+        while(!queue.isEmpty())
+        {
+            int size = queue.size();
+                while(size-- > 0)
+                {
+                    int idx = queue.remove();
+                    if(arr[idx] == 0)
+                        return true;
+                    
+                    if(idx + arr[idx] < n && !seen[idx+arr[idx]])
+                    {
+                      queue.add(idx+arr[idx]);
+                       seen[idx+arr[idx]] = true;
+                    }
+                        
+                    if(idx-arr[idx] >= 0 && !seen[idx-arr[idx]])
+                    {
+                        queue.add(idx-arr[idx]);
+                        seen[idx-arr[idx]] = true;
+                    }
+                        
+                }
+        }
+        
+        return false;
+    }
+    
+   Time: O(N)
+   Space: O(N)
+   
+   Dfs approach
+
+public boolean canReach(int[] arr, int start) {
+        
+        if(start < 0 || start >= arr.length || arr[start] < 0)
+            return false;
+        
+        if(arr[start] == 0)
+            return true;
+        
+        
+        int curr = arr[start];
+        arr[start] = -1;
+        return canReach(arr,start+curr) || canReach(arr,start-curr);
+     
+        
+    }
+    
+    Time: O(N)
+    Space: O(N)
