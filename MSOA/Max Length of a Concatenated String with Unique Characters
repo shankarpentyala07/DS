@@ -1,0 +1,47 @@
+Solution1:
+class Solution {
+    
+    public boolean isUnique(String str)
+    { 
+        if(str.length() > 26)
+            return false;
+        boolean[] seen = new boolean[26];
+        
+        for(char ch : str.toCharArray())
+        {
+            if(seen[ch-'a'])
+                return false;
+            seen[ch-'a'] = true;
+        }
+        return true;
+    }
+    public int maxLength(List<String> arr) {
+        //Find all possible subsequences which are unique       
+        List<String> res = new ArrayList<String>();
+        res.add("");
+        int len = 0;     
+        for(String str : arr)
+        {
+            if(!isUnique(str))
+                continue;
+            List<String> tmpList = new ArrayList<String>();
+            for(String curr : res)
+            {
+                String tmp = curr + str;
+                if(isUnique(tmp))
+                {
+                    tmpList.add(tmp);
+                    len = Math.max(tmp.length(),len);
+                }
+            }
+            res.addAll(tmpList);
+        }
+        return len;
+    }
+}
+
+Time: O(n*2^n)
+Space: O(n*2^n)
+
+Similar to subsets problem:
+https://www.educative.io/collection/page/5668639101419520/5671464854355968/5670249378611200
