@@ -1,0 +1,15 @@
+public static int dupAb(String s){
+    int i = 0, sum =0;
+    while (i < s.length()) {
+            char charForReference = s.charAt(i);
+            int cnt = 0;
+            while (i < s.length() && s.charAt(i) == charForReference) {
+                    cnt++;
+                    i++;
+            }
+            if ((cnt/3) != 0) {
+                    sum += (cnt/3);
+            }
+    }
+    return sum;
+    }
