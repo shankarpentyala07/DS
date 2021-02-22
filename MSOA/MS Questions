@@ -1,0 +1,701 @@
+// Min Moves to Make String Without 3 Identical Consecutive Letters
+public static int dupAb(String s){
+    int i = 0, sum =0;
+    while (i < s.length()) {
+            char charForReference = s.charAt(i);
+            int cnt = 0;
+            while (i < s.length() && s.charAt(i) == charForReference) {
+                    cnt++;
+                    i++;
+            }
+            if ((cnt/3) != 0) {
+                    sum += (cnt/3);
+            }
+    }
+    return sum;
+    }
+
+//Min Steps to Make Piles Equal Height
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(step(new Integer[]{5,2,1}));
+        System.out.println(step(new Integer[]{4,5,5,4,2}));
+    }
+    
+    public static int step(Integer[] input){
+        if(input == null || input.length == 0){
+            return 0;
+        }
+        
+        int steps = 0;
+        Arrays.sort(input, Collections.reverseOrder());
+        
+        for( int i=1; i<input.length; i++){
+            if(input[i] < input[i-1]){
+                steps += i;
+            }
+        }
+        return steps;
+    }
+}
+
+// Longest Substring Without 3 Contiguous Occurrences of Letter
+public static String maxSubString(String s){
+         int start=0,max=0,cnt=0,index=0;
+         for(int i=1;i<s.length();i++){
+             if(s.charAt(i)==s.charAt(i-1)){
+                 cnt++;
+             }
+             else{
+                 cnt=1;
+             }
+             if(cnt<=2){
+                 if(i-index+1>max){
+                     max = i-index+1;
+                     start = index;
+                 }
+             }
+             else{
+                 index = i-1;
+                 cnt=2;
+             }
+         }
+         return s.substring(start,max);
+     }
+    
+ // Lexicographically Smallest String
+private static String lexiSmallestString(String s) {
+     StringBuilder str = new StringBuilder(s);
+     int i=0;
+     for(i=0; i<str.length()-1; i++){
+         if(str.charAt(i)>str.charAt(i+1)){
+             break;
+         }
+     }
+     return str.deleteCharAt(i).toString();
+ }
+
+// String Without 3 Identical Consecutive Letters
+public static String solution(String s) {
+if(s.length() < 3)return s;
+		StringBuilder sb = new StringBuilder(s);
+		for(int i = 1; i < sb.length()-1;i++) {
+			if(sb.charAt(i) == sb.charAt(i-1) && sb.charAt(i) == sb.charAt(i+1)) {
+				sb = sb.deleteCharAt(i);
+				i--; //we are deleting the middle character when there is 3 occurrence. so we have to set i back to same value so that it can start the search again
+			}
+		}
+		return sb.toString();
+	}
+
+// Longest Semi-Alternating Substring
+public static String maxSubString(String s){
+         int start=0,max=0,cnt=0,index=0;
+         for(int i=1;i<s.length();i++){
+             if(s.charAt(i)==s.charAt(i-1)){
+                 cnt++;
+             }
+             else{
+                 cnt=1;
+             }
+             if(cnt<=2){
+                 if(i-index+1>max){
+                     max = i-index+1;
+                     start = index;
+                 }
+             }
+             else{
+                 index = i-1;
+                 cnt=2;
+             }
+         }
+         return max-start;
+     }
+
+// Day of week that is K days later
+{
+	var days = new string[] { "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun" };
+	int index = -1;
+	for(int i =0;i<days.Length;i++){
+		if(days[i]==day)
+		{
+			index = i;
+			break;
+		}
+	}
+	
+	int newIndex = (k+index)%7;
+	return days[newIndex];
+
+}
+
+//Max Inserts to Obtain String Without 3 Consecutive 'a' (To be modified)
+int solution(string s) {
+    if(s.length() == 0){
+        return 0;
+    }
+    int cnt=2;
+    int res=0;
+    for(char c: s) {
+        if (c == 'a') {
+            cnt--;
+            if (cnt<0) {
+                return -1;
+            }
+            continue;
+        } 
+        res += cnt;
+        cnt=2;
+    }
+    res+=cnt;
+    return res;
+}
+
+//Min Swaps to Group Red Balls (To be Modified)
+  public int alternatvieSolution(String S){
+		List<Integer> reds = new ArrayList<>();
+		for (int i = 0; i < S.length(); i++){
+			if (S.charAt(i) == 'R'){
+				reds.add(i);
+			}
+		}
+		
+		// RRRWRR
+		// 01245
+		int res = 0;
+		int l = 0;
+		int r = reds.size()-1;
+		while(l < r){
+			int occupiedInMiddle = r-l-1; // 3 occupied in middle when left is 0 and right is 5
+			res += reds.get(r) - reds.get(l) - 1 - occupiedInMiddle;
+			r--;
+			l++;
+		}
+		return res;
+	}
+
+//Max Length of a Concatenated String with Unique Characters (To be Modified)
+class Solution {
+    private boolean isUnique(String str) {
+        if (str.length() > 26) return false;
+        boolean[] used = new  boolean [26];
+        char[] arr = str.toCharArray();
+        for (char ch : arr) {
+            if (used[ch - 'a']){
+            return false; 
+            } else {
+            used[ch -'a'] = true;
+        }
+    }
+        return true;
+    }
+    public int maxLength(List<String> arr) {
+        List<String> res = new ArrayList<>();
+        res.add("");
+        for (String str : arr) {
+            if (!isUnique(str)) continue;
+            List<String> resList = new ArrayList<>();
+            for (String candidate : res) {
+                String temp = candidate + str;
+                if (isUnique(temp)) resList.add(temp);
+            }
+            res.addAll(resList);
+        }
+        int ans = 0;
+        for (String str : res) ans = Math.max(ans, str.length());
+        return ans;
+    }
+}
+
+//Unique Integers That Sum Up To 0  (To be Modified)
+class Solution {
+    public int[] sumZero(int n) {
+        int [] uniqueZero = new int[n];
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+                uniqueZero[i] = i;
+                total += i;
+            }
+        uniqueZero[0] = total*-1;
+        return uniqueZero;
+    }
+}
+
+//Min Deletions To Obtain String in Right Format (To be Modified)
+/*
+Optimal solution in O(n) time ans O(1) memory
+First count 'A' letters in the string, let this equal to num_a, hence there are n-num_a 'B' letter.
+Deleting all 'A' or all 'B' is good and leaves a good string (that contains only 'B' or 'A').
+Otherwise in the optimal string you see both 'A' and 'B'.
+We are searching for the first 'B' in the given string.
+If you see that at position=i, then before this point you should delete all 'B', and after position=i you should delete all 'A'.
+But if you process the characters one by one you'll know these counts, so you'd need to delete del+num_a, where for del you need to increase it one if you see 'B', and decrease num_a by one if you see 'A'.
+*/
+int abletters(string s){
+    
+    int n=s.length();
+    int num_a=0,ans;
+    
+    for(int i=0;i<n;i++)
+        if(s[i]=='A') num_a++;
+    ans=min(num_a,n-num_a);
+    
+    int del=0;
+    for(int i=0;i<n;i++){
+        if(s[i]=='B'){
+            ans=min(ans,del+num_a);
+            del++;
+        }
+        else num_a--;
+    }
+    return ans;
+}
+
+//Particle Velocity (To be Modified)
+class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        if(A.length<=2) return 0;
+    int left=0;
+    int right=0;
+    int solution=0;
+    while(left<A.length){
+        right=left+2;
+        int count=0;
+        while(right<A.length && A[right-2]+A[right]==2*A[right-1]){//3,4,5
+            count++;
+            solution +=count;//+1,+2,+3
+            right++;
+        }
+        left=right-1;
+    }
+    return solution<1_000_000_000?solution:-1;
+    }
+}
+
+//Widest Path Without Trees(To be Modified)
+int maxWidth = 0;
+        int[] X = {5, 5, 5 ,7, 7, 7};
+
+        Arrays.sort(X);
+
+        for (int i = 0; i < X.length-1; i++) {
+            maxWidth = Math.max(maxWidth, (X[i+1] - X[i]));
+        }
+
+//Jump Game 3(To be modified) Solution from Leetcode
+class Solution {
+    public boolean canReach(int[] arr, int start) {
+        int n = arr.length;
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            // check if reach zero
+            if (arr[node] == 0) {
+                return true;
+            }
+            if (arr[node] < 0) {
+                continue;
+            }
+
+            // check available next steps
+            if (node + arr[node] < n) {
+                q.offer(node + arr[node]);
+            }
+            if (node - arr[node] >= 0) {
+                q.offer(node - arr[node]);
+            }
+            // mark as visited
+            arr[node] = -arr[node];
+        }
+        return false;
+    }
+}
+
+//Fair Imdex(To be modified)
+private static int getNumOfFairIndexes(int[] A, int[] B) {
+	int res = 0, sumA = 0, sumB = 0;
+	for(int i=0;i<A.length;i++) {
+		sumA += A[i];
+		sumB += B[i];
+	}
+	int tmpA = 0, tmpB = 0;
+	for(int i=0;i<A.length-1;i++) {
+		tmpA += A[i];
+		tmpB += B[i];
+		if(sumA == 2 * tmpA && sumB == 2 * tmpB && tmpA == tmpB)
+			res++;
+	}
+	return res;
+}
+
+// Light Bulb Switcher (To be modified)
+class Solution {
+    public int numTimesAllBlue(int[] arr) {
+        int ans = 0, sum = 0, target = 0;
+		
+	for(int i = 1; i<= arr.length; i++) {
+		sum += arr[i-1];
+		target += i ; //Sum from 1 to i
+		if(sum == target) ans++;
+	}
+		
+	return ans;
+    }
+}
+
+// Crop Words(To be modified) https://leetcode.com/discuss/interview-question/507367/Microsoft-or-OA-2020-or-Crop-Words/486604
+public class Main {
+    public static void main(String[] args) {   
+        System.out.println(cropWords("codility We test coders", 14));// === "codility We"
+        System.out.println(cropWords(" co de my", 5));// === " co"
+        System.out.println(cropWords(" co de my", 7));// === " co de"
+        System.out.println(cropWords("   ", 2));// === ""
+        System.out.println(cropWords("   re", 2));// === "") //3 spaces before
+        System.out.println(cropWords(" c ", 3));// === " c"
+        System.out.println(cropWords(" c d  ", 5));// === " c d"
+        System.out.println(cropWords("co de my", 5));// === "co de"
+        System.out.println(cropWords("Word", 4));// === "Word"
+        System.out.println(cropWords("codility We test coders", 23));// === "codility We test coders"
+        System.out.println(cropWords("withOutSpaces", 14));// === "withOutSpaces"
+        System.out.println(cropWords("", 14));// === ""
+        System.out.println(cropWords("Separatedby hyphens", 14));// === "Separatedby"
+        System.out.println(cropWords("      Codility We test coders     ", 14));// === "      Codility") //6 leading spaces
+        System.out.println(cropWords("      Codility We test coders     ", 10));// === "") //6 leading spaces
+    }
+    private static String cropWords(String s, int k){ 
+        int i=0;
+        while(i<s.length()&&s.charAt(i)==' ') i++;
+        while(i<s.length()) {
+            int j=i;
+            while(j<s.length()&&Character.isLetter(s.charAt(j))) j++;
+            if (j<=k) {
+                i = j;
+                while(i<s.length()&&s.charAt(i)==' ') i++;
+            } else {
+                i--;
+                break;
+            }
+        }
+        if (i>=s.length()) i--;
+        while(i>=0&&s.charAt(i)==' ') i--;
+        return s.substring(0, i+1);
+    }
+}
+
+// Max Chunks to Sort Array(To be Modified)
+    int chunks=0;
+    int A[] = new int[arr.length];
+    
+    for(int i=0;i<arr.length;i++){
+        A[i]=arr[i];
+    }
+    
+    int origSum = 0, sortedSum=0;
+    Arrays.sort(A);
+    for(int i=0;i<arr.length;i++){
+        origSum +=arr[i];
+        sortedSum+=A[i];
+        
+        if(origSum == sortedSum){
+            chunks++;
+        }
+    }
+    return chunks;
+}
+
+// Min Cost to Get String Without 2 Identical Consecutive Letters (To Be Modified)
+public int minCostToDeleteIdenticalConsecutiveLetters(String S, int[] cost){
+    if(S.length()==0 || cost.length==0){
+        return 0;
+    }
+    int totalCost = 0;
+
+    for(int i: cost){
+        totalCost+=i;
+    }
+    
+    int maxRemainCost = 0;
+    
+    int pos=0;
+    
+    while(pos<S.length()){
+        int maxCost = cost[pos];
+        while(pos+1<S.length() && S.charAt(pos)==S.charAt(pos+1)){
+            maxCost = Math.max(cost[pos], cost[pos+1]);
+            pos++;
+        }
+        maxRemainCost +=maxCost;
+        pos++;
+    }
+    return totalCost - maxRemainCost;
+}
+
+// Riddle
+public static String replaceQuestionMark(String str){
+    if(str.length()==0){
+        return str;
+    }
+    char[] arr = str.toCharArray();
+
+    for(int i=0; i<arr.length; i++){
+        if(arr[i]=='?'){
+            char pre = '?';
+            char post = '?';
+            if(i>0){
+                pre = arr[i-1];
+            }
+            if(i<arr.length-1){
+                post = arr[i+1];
+            }
+            char rep = 'a';
+            while((rep==pre || rep==post)&& rep<='z'){
+                rep = (char)(rep+1);
+            }
+            arr[i] = rep;
+        }
+    }
+    return new String(arr);
+}
+
+// Count Visible Nodes in Binary Tree
+public class Node{
+        int value;
+        Node left;
+        Node right;
+
+        public Node(int value){
+            this.value = value;
+        }
+    }
+
+    public int solution(Node root){
+        return solution(root,Integer.MIN_VALUE);
+    }
+
+    public int solution(Node node,int maxValue){
+        if(node==null){
+            return 0;
+        }
+
+        int count=0;
+        if(node.value>=maxValue){
+            count = count+1;
+            maxValue = node.value;
+        }
+
+        count = count + solution(node.left,maxValue)+solution(node.right,maxValue);
+
+        return count;
+    }
+
+// Largest Alphabetic Character(To be Modified)
+public static String largestCharacter(String s) {
+        // record each char's uppercase or lowercase
+		boolean[] uppers = new boolean[26];
+        boolean[] lowers = new boolean[26];
+        char[] arr = s.toCharArray();
+        for (char cur: arr) {
+            if (Character.isLowerCase(cur)) lowers[cur-'a'] = true;
+            if(Character.isUpperCase(cur)) uppers[cur-'A'] = true;
+        }
+        // visit from uppercase's high index 
+        for (int i=25; i>=0; i--) {
+            // check both its uppercase and lowercase exist or not
+            if (uppers[i]&&lowers[i]) {
+                return (char)(i+'A')+"";
+            }
+        }
+        return "NO";
+	}
+
+// NUmber of fractions that sum t0 1
+
+public class HelloWorld{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int[] den = {5,10,15,2,4,15,10,5};
+        int[] num = {1,2,3,1,2,12,8,4};
+        int ans = fractionsum(num,den);
+        System.out.println("Answer is "+ ans);
+        // cnt=0;
+     }
+     
+     public static int fractionsum(int[]X,int[]Y) {
+int count=0;
+for(int i=0;i<X.length;i++) {
+for(int j=i+1;j<X.length;j++) {
+//System.out.println("i: "+i+" j:"+j);
+int res1=((X[i]*Y[j])+(X[j]*Y[i]));
+int res2=(Y[i]*Y[j]);
+if(res1==res2)
+count++;
+}
+}
+return count;
+}
+}
+
+// Count Of Hours Variations (1 test case not working need to debug)
+import java.util.*;
+public class HelloWorld{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int ans = GetTimePermutation(1,0,0,2);
+        System.out.println("Answer is "+ ans);
+        // cnt=0;
+     }
+     
+     public static int GetTimePermutation(int a, int b, int c, int d){
+        HashSet<String> set = new HashSet<>();
+        List<Integer> leftOver = new ArrayList<>();
+        leftOver.add(a);
+        leftOver.add(b);
+        leftOver.add(c);
+        leftOver.add(d);
+        dfsHelper(set, leftOver, "");
+        return set.size();
+    }
+     
+     private static void dfsHelper(HashSet<String> uniqueTime, List<Integer> leftOver, String currentStr)
+    {
+        String copy = currentStr;
+
+        for(int i = 0; i < leftOver.size(); i++){
+            int num = leftOver.get(i);
+            copy += String.valueOf(num);
+            leftOver.remove(i);
+
+            if (leftOver.size() == 0)
+            {
+                if (isValidHour(copy) && isValidMin(copy))
+                {
+                    uniqueTime.add(copy);
+                }
+                leftOver.add(0, num);
+                return;
+            }
+
+            dfsHelper(uniqueTime, leftOver, (copy));
+            leftOver.add(i, num);
+            copy = copy.substring(0, copy.length() - 1);
+        }
+
+    }
+
+    private static boolean isValidHour(String str) {
+        if (str.substring(0, 2) == "00")
+        {
+            return true;
+        }
+        int hour = Integer.parseInt(str.substring(0, 2));
+        return (0 < hour) && (hour < 24);
+    }
+
+    private static boolean isValidMin(String str) {
+        int min = Integer.parseInt(str.substring(2,4));
+        System.out.println("min is "+ min);
+        return (0 <= min) && (min <= 59);
+    }
+}
+
+//Alladins Checker game
+public class HelloWorld{
+    
+    int[] x = {-2,2};
+    int[] y = {2,-2};
+    
+    int[][] dirs = {{-2, 2}, {-2, -2}};
+    
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        List<String> row1 = new ArrayList<String>();
+        List<List<String>> input = new ArrayList<List<String>>();
+        row1.add(".");
+        row1.add(".");
+        row1.add("X");
+        row1.add(".");
+        row1.add(".");
+        row1.add(".");
+        input.add(row1);
+        List<String> row2 = new ArrayList<String>();
+        row2.add(".");
+        row2.add(".");
+        row2.add(".");
+        row2.add(".");
+        row2.add(".");
+        row2.add(".");
+        input.add(row2);
+        List<String> row3 = new ArrayList<String>();
+        row3.add(".");
+        row3.add(".");
+        row3.add(".");
+        row3.add(".");
+        row3.add("X");
+        row3.add(".");
+        input.add(row3);
+        List<String> row4 = new ArrayList<String>();
+        row4.add(".");
+        row4.add("X");
+        row4.add(".");
+        row4.add(".");
+        row4.add(".");
+        row4.add(".");
+        input.add(row4);
+        List<String> row5 = new ArrayList<String>();
+        row5.add(".");
+        row5.add(".");
+        row5.add("X");
+        row5.add(".");
+        row5.add("X");
+        row5.add(".");
+        input.add(row5);
+        List<String> row6 = new ArrayList<String>();
+        row5.add(".");
+        row5.add(".");
+        row5.add(".");
+        row5.add("O");
+        row5.add(".");
+        row5.add(".");
+        input.add(row6);
+        
+        int answer = getMaxMoves(input,5,3);
+        System.out.println("ans wer is " + answer);
+     }
+     
+    public static boolean isValid(List<<List<String>> check, int r, int c) {
+    int rows = check.size();
+    int cols = check.get(0).size();
+    
+    return r >= 0 && r < rows && c >= 0 && c < cols;
+    }
+    
+    public static int getMaxMoves(List<<List<String>> check, int r, int c) {
+    
+    int ret = 0;
+    
+    for (int[] d : dirs) {
+        // next move coordinates
+        int r2 = r + d[0];
+        int c2 = c + d[1];
+        // coordinates to check for Aladdin piece
+        int r1 = r + d[0] / 2;
+        int c1 = c + d[1] / 2;
+        
+        if (isValid(check, r2, c2) && check.get(r2).get(c2) == '.' && check.get(r1).get(c1) == 'X') {
+            // eat the Aladdin piece, to avoid to see it again in the recursive branch
+            check.get(r1).add(c1,".");
+            ret = Math.max(ret, 1 + getMaxMoves(check, r2, c2));
+            // backtrack the change
+            check.get(r1).add(c1,"X");
+        }
+    }
+    
+    return ret;
+    }
+}
