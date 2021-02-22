@@ -1,0 +1,22 @@
+public static String maxSubString(String s){
+         int start=0,max=0,cnt=0,index=0;
+         for(int i=1;i<s.length();i++){
+             if(s.charAt(i)==s.charAt(i-1)){
+                 cnt++;
+             }
+             else{
+                 cnt=1;
+             }
+             if(cnt<=2){
+                 if(i-index+1>max){
+                     max = i-index+1;
+                     start = index;
+                 }
+             }
+             else{
+                 index = i-1;
+                 cnt=2;
+             }
+         }
+         return s.substring(start,max);
+     }
