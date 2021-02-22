@@ -8,3 +8,14 @@ private static String lexiSmallestString(String s) {
      }
      return str.deleteCharAt(i).toString();
  }
+
+Solution2:
+
+int len = str.length();
+        for (int i = 0; i < len - 1; i++) {
+            if (str.charAt(i) > str.charAt(i + 1)) {
+                return str.substring(0, i) + str.substring(i + 1);
+            }
+        }
+        return str.substring(0, len - 1);
+    }
