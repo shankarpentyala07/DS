@@ -1,0 +1,80 @@
+Given a string S, returns the maximum number of letters a that can be inserted into S (including at the front and end of S) so that
+the resulting string doesn’t contain three consecutive letters a. If string S already contains the substring aaa, then your function should return -1.
+
+Example 1:
+Input: aabab
+Output: 3
+Explanation:
+A string aabaabaa can be made
+
+Example 2:
+Input: dog
+Output: 8
+Explanation:
+A string aadaaoaagaa can be made
+
+Example 3:
+Input: aa
+Output: 0
+Explanation:
+No longer string can be made.
+
+Example 4:
+Input: baaaa
+Output: -1
+Explanation:
+There is a substring aaa
+
+Solution1:
+public static int maxInserts(String s) {
+        // WRITE YOUR BRILLIANT CODE HERE
+        int count_As = 0;
+        int count_others = 0;
+        int s_len = s.length();
+        for (int i = 0; i < s_len; ++i) {
+            if (s.charAt(i) == 'a') {
+                count_As++;
+            }
+            else {
+                count_others++;
+                count_As = 0;
+            }
+            if (count_As == 3) {
+                return -1;
+            }
+        }
+        return 2 * (count_others + 1) - (s_len - count_others);
+    }
+
+Solution2:
+public static int maxInserts(String s) {
+        // WRITE YOUR BRILLIANT CODE HERE
+        
+        if(s == null || s.length() == 0)
+            return 0;
+        int insertions = 0,countA= 0,len=s.length();
+        
+        for(int i=0;i<len;i++)
+        {
+            if(s.charAt(i) == 'a')
+                countA++;
+            else 
+            {
+                insertions += 2-countA;
+                countA=0;
+            }
+            
+            if(countA == 3)
+                return -1;
+            
+        }
+        
+        
+        if(s.charAt(len-1) != 'a')
+            insertions+= 2;
+        else
+            insertions-= 2-countA;
+        
+        return insertions;
+        
+    }
