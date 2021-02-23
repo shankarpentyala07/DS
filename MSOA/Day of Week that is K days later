@@ -1,0 +1,49 @@
+Given current day as day of the week and an integer K, the task is to find the day of the week after K days.
+
+Example 1:
+Input:
+day = “Monday”
+
+K = 3
+
+Output: Thursday
+Example 2:
+Input:
+day = “Tuesday”
+
+K = 101
+
+Output: Friday
+
+Solution1:
+public static String dayOfWeek(String day, int k) {
+        // WRITE YOUR BRILLIANT CODE HERE      
+        String days [] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+        int i=0;
+        for(;i<days.length;i++)
+        {
+            if(days[i].equals(day))
+                break;
+        }
+        
+        return days[(i+k) % 7];
+        
+        
+    }
+
+Solution2:
+public static String dayOfWeek(String day, int k) {
+        // WRITE YOUR BRILLIANT CODE HERE
+          List<String> days = new ArrayList<String>() {
+              {
+                  add("Monday");
+                  add("Tuesday");
+                  add("Wednesday");
+                  add("Thursday");
+                  add("Friday");
+                  add("Saturday");
+                  add("Sunday");
+              }
+          };
+          int index = days.indexOf(day);
+          return days.get((index + k) % 7);
