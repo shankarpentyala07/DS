@@ -1,0 +1,39 @@
+Given a string S containing only characters a and b. A substring (contiguous fragment) of S is called a semi-alternating substring if it does not contain 
+three identical consecutive characters. In other words, it does not contain either 'aaa' or 'bbb' substrings. Note that the whole S is its own substring.
+
+Example 1:
+Input: baaabbabbb
+Output: 7
+Explanation:
+the longest semi-alternating substring is aabbabb
+
+Example 2:
+Input: babba
+Output: 5
+Explanation:
+Whole S is semi-alternating.
+
+Example 3:
+Input: abaaaa
+Output: 4
+Explanation:
+The first four letters of S create a semi-alternating substring.
+
+public int longestSemiAlternatingSubstring(String s) {
+        // write your code here
+     if(s == null || s.length() < 3)
+            return s.length();
+        
+        int len = s.length();
+        
+        int sindex = 0,count = 2,maxlen=2;
+        for(int i=2;i<len;i++)
+        {
+            if(s.charAt(i) != s.charAt(i-1) || s.charAt(i) != s.charAt(i-2))
+                 maxlen = Math.max(maxlen,i-sindex+1);
+            else
+                sindex = i-1;
+        }
+        
+        return maxlen;
+    }
