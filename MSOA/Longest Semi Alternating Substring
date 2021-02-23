@@ -19,6 +19,8 @@ Output: 4
 Explanation:
 The first four letters of S create a semi-alternating substring.
 
+Solution1:
+
 public int longestSemiAlternatingSubstring(String s) {
         // write your code here
      if(s == null || s.length() < 3)
@@ -33,6 +35,37 @@ public int longestSemiAlternatingSubstring(String s) {
                  maxlen = Math.max(maxlen,i-sindex+1);
             else
                 sindex = i-1;
+        }
+        
+        return maxlen;
+    }
+
+
+Solution2:(Same as Solution1)
+public static int semiSubstring(String s) {
+        // WRITE YOUR BRILLIANT CODE HERE
+        if(s == null || s.length() < 3)
+            return s.length();
+        
+        int len = s.length();
+        
+        int sindex = 0,count = 1,maxlen=1;
+        for(int i=1;i<len;i++)
+        {
+            if(s.charAt(i) == s.charAt(i-1))
+                count++;
+            else
+                count = 1;
+            
+            if(count < 3)
+            {
+                maxlen = Math.max(maxlen,i-sindex+1);
+            }
+            else
+            {
+               sindex = i-1;
+               count = 2;
+            }
         }
         
         return maxlen;
