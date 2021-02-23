@@ -28,6 +28,24 @@ Time complexity: O(NlogN)
 Space complexity: O(1)
 
 
+
+Solution2:
+
+if(input == null || input.length == 0){
+            return 0;
+        }
+        
+        int steps = 0;
+        Arrays.sort(input, Collections.reverseOrder());
+        
+        for( int i=1; i<input.length; i++){
+            if(input[i] < input[i-1]){
+                steps += i;
+            }
+        }
+        return steps;
+        
+        
 Solution2:
 
  public int minSteps(int[] piles){
