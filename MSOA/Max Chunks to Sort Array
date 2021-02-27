@@ -1,0 +1,22 @@
+
+https://seattler.io/thread-1570.htm
+
+ int chunks=0;
+    int A[] = new int[arr.length];
+    
+    for(int i=0;i<arr.length;i++){
+        A[i]=arr[i];
+    }
+    
+    int origSum = 0, sortedSum=0;
+    Arrays.sort(A);
+    for(int i=0;i<arr.length;i++){
+        origSum +=arr[i];
+        sortedSum+=A[i];
+        
+        if(origSum == sortedSum){
+            chunks++;
+        }
+    }
+    return chunks;
+}
