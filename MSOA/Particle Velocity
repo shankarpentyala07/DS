@@ -1,0 +1,50 @@
+ 
+
+
+Solution1:
+ public static int particleVelocity(int[] particles) {
+        
+        if(particles == null || particles.length < 3)
+            return 0;
+        
+        if(particles.length < 3)
+            return 0;
+        int periods = 0,count=0;
+        for(int i=1;i<particles.length-1;i++)
+        {
+            if( particles[i] - particles[i-1] ==  particles[i+1] - particles[i])
+            {
+                count++;
+                periods += count;
+                
+            }
+            else
+                count=0;
+            
+            if(periods > 1000000000)
+                return -1;
+            
+        }
+        
+        return periods > 1000000000 ? -1 : periods;
+       
+            
+    }
+    
+
+Time: O(N)
+Space: O(1)
+
+public static int particleVelocity(int[] particles) {
+        // WRITE YOUR BRILLIANT CODE HERE
+        int total_periods = 0, particles_size = particles.length;
+        for (int i = 0; i < particles_size; i++) {
+            for (int count = 0; i + 2 < particles_size && particles[i + 1] - particles[i] == particles[i + 2] - particles[i + 1]; i++) {
+                count++;
+                total_periods += count;
+            }
+        }
+        return total_periods < 1000000000 ? total_periods : -1;
+
+Time : O(N)
+Space: O(1)
