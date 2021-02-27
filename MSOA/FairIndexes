@@ -1,0 +1,22 @@
+public int CountIndexes(List<Integer> a, List<Integer> b) {
+        int sumA=0,sumB=0,currA=0,currB=0;
+         for(int i=0;i<a.size();i++)
+         {
+             sumA += a.get(i);
+             sumB += b.get(i);
+         } 
+         int fair = 0;
+         for(int i=0;i<a.size()-1;i++)
+         {
+            currA += a.get(i);
+            currB += b.get(i);   
+             sumA -= a.get(i);
+             sumB -= b.get(i);
+             if(currA == currB && sumA == sumB && sumA == currA)
+                 fair++;
+         }
+         return fair;
+    }
+
+Time:O(N)
+Space: O(1)
