@@ -1,0 +1,34 @@
+https://www.lintcode.com/problem/largest-number-x-which-occurs-x-times/
+
+Solution:
+
+public class Solution {
+    /**
+     * @param arr: an array of integers
+     * @return: return the biggest value X, which occurs in A exactly X times.
+     */
+    public int findX(int[] arr) {
+        // write your code here
+
+        HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
+
+        for(int num : arr)
+            hm.put(num,hm.getOrDefault(num,0)+1);
+
+        int res = 0;
+
+        for(int key : hm.keySet())
+        {
+            if(key == hm.get(key))
+            {
+                if(key > res)
+                    res = key;
+            }
+        }
+
+        return res;
+    }
+}
+
+Time: O(N)
+Space: O(N)
