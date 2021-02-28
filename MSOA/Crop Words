@@ -1,0 +1,24 @@
+
+https://seattler.io/thread-1323.htm
+private static String cropWords(String s, int k){
+         if(k >= s.length()){
+                    k=s.length()-1;  
+                    while(k > 0 && s.charAt(k) == ' '){
+                                   k--;
+                                 }
+                  }
+           else
+             {
+                while(s.charAt(k) != ' '){
+                            k--;
+                       }
+                   while(k > 0 && s.charAt(k) == ' '){
+                                  k--;
+                         }
+                  }
+               return s.substring(0, k + 1);
+              }
+
+Time: O(N)
+Space: O(1)
+
