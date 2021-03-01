@@ -1,0 +1,12 @@
+private static int getLargestMAlignedSubset(int[] nums, int m) {
+        int max = 0, len = nums.length;
+        int[] counts = new int[len];
+        for (int num : nums) {
+//            Get the remainder of each number.
+            int rem = num < 0 ? (num % m + m) : num % m;
+            counts[rem]++;
+            max = Math.max(max, counts[rem]);
+        }
+//        As we are looking for pairs if the count is less than 2, then there is not valid pair.
+        return max < 2 ? 0 : max;
+    }
