@@ -1,0 +1,56 @@
+You're given a string that contains only letters 'a' to 'z' and character '?'. Write an efficient algorithm that's replacing all characters '?' with letters 'a' to 'z' in such a way, that return string doesn't contain adjacently repeating characters. You aren't allowed to change any character value or position in an input string except for the value of '?'. Presume that the input string doesn't contain adjacently repeating characters, except for '?'.
+
+Example 1
+Input: "?b?a"
+Output: "abca" (Other characters for '?' are valid as well, as long as output string is valid)
+
+Example 2
+Input: "ab?cde????fo??"
+Output: "abacdeabcdfode"
+
+Example 3
+Input: "??axzb??def??g"
+Output: "abaxzbcedefefg"
+
+Example 4
+Input: "??????????????"
+Output: "abcdefghijklmn"
+
+
+Solution:
+private static String solve(String s) {
+	StringBuilder sb = new StringBuilder();
+	if(s == null || s.length() == 0)
+		return "";
+	if(s.length() == 1) 
+		return s.equals("?") ? "a" : s;
+	for(int i=0;i<s.length();i++) {
+		char cur = s.charAt(i);
+		if(cur == '?') {
+			if(i == 0) {
+				char next = s.charAt(i+1);
+				sb.append(next == '?' ? 'a' : (char)((next - 'a' + 1)%26 + 'a'));
+			}else if(i == s.length() - 1){
+				char prev = sb.charAt(i-1);
+					sb.append((char)((prev - 'a' + 1)%26 + 'a'));
+			}else {
+				char prev = sb.charAt(i-1), next = s.charAt(i+1);
+				if(next == '?') {
+					sb.append((char)((prev - 'a' + 1)%26 + 'a'));
+				}else {
+					if(prev -'a' + 1 % 26 == next - 'a') {
+						sb.append((char)((prev - 'a' + 2)%26 + 'a'));
+					}else {
+						sb.append((char)((prev - 'a' + 1)%26 + 'a'));
+					}
+				}
+			}
+		}else {
+			sb.append(cur);
+		}
+	}
+	return sb.toString();
+}
+
+Time: O(N)
+Space: O(N)
