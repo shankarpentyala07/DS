@@ -49,23 +49,25 @@ class Solution {
 
 Solution3:
 class Solution {
-    static int count = 0;
-    public void preOrder(TreeNode root,Integer val)
-    {
-        if(root == null)
-            return;
-        if(root.val >= val)
-            count++;
-       // System.out.println(root.val);
-        val = Math.max(val,root.val);
-        preOrder(root.left,val);
-        preOrder(root.right,val);
-    }
-    public int goodNodes(TreeNode root) {
+    //int count =0;
+    public int goodNodes(TreeNode root,int max) {
         if(root == null)
             return 0;
-        count = 0;
-        preOrder(root,root.val);
-        return count;
+        int count=0;
+        if(root.val >= max)
+        {
+            max = root.val;
+            count++;
+        }
+        
+      count +=  goodNodes(root.left,max);
+      count += goodNodes(root.right,max);
+      return count;
+    }
+    
+    public int goodNodes(TreeNode root) {      
+        return goodNodes(root,Integer.MIN_VALUE);
+         
+
     }
 }
