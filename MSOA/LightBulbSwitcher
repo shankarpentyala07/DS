@@ -25,7 +25,25 @@ N is an integer within the range [1..100,000]
 the elements of A are all distinct
 each element of array A is an integer within the range [1..N]
 
-Solution:
+Solution1:
+  public int numTimesAllBlue(int[] light) {
+        
+        if(light == null || light.length == 0)
+            return 0;
+        int count=0;
+        int max = light[0];
+        for(int i=0;i<light.length;i++)
+        {
+            max = Math.max(max,light[i]);
+            if(max == i+1)
+                count++;
+        }
+        
+        return count;
+    }
+
+
+Solution2:
 // Light Bulb Switcher (To be modified)
 class Solution {
     public int numTimesAllBlue(int[] arr) {
