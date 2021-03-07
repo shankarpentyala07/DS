@@ -1,0 +1,42 @@
+ if(S == null || S.length() == 0)
+            return N*2;
+
+        String[] rseats = S.split(" ");
+        HashMap<Integer,Set<Character>> map = new HashMap<>();
+
+        for(String seat : rseats)
+        {
+            int len = seat.length();
+            int row = Integer.parseInt(seat.substring(0,len-1));
+            char col = seat.charAt(len-1);
+            if(!map.containsKey(row))
+                map.put(row,new HashSet<Character>());
+            map.get(row).add(col);
+        }
+
+        int families = (N - map.size())*2;
+
+        for(int row : map.keySet())
+        {
+            Set<Character> seats = map.get(row);
+            boolean flag = false;
+
+            if(!seats.contains('B') && !seats.contains('C') && !seats.contains('D') && !seats.contains('E'))
+            {
+                flag = true;
+                families++;
+            }
+
+            if(!seats.contains('F') && !seats.contains('G') && !seats.contains('H') && !seats.contains('J'))
+            {
+                flag = true;
+                families++;
+            }
+            if(!flag && !seats.contains('D') && !seats.contains('E') && !seats.contains('F') && !seats.contains('G'))
+            {
+                families++;
+            }
+
+        }
+
+        return families;
