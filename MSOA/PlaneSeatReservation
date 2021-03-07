@@ -1,4 +1,10 @@
- if(S == null || S.length() == 0)
+ 
+https://www.lintcode.com/problem/aircraft-seat/
+
+	public static int solution(int N, String S) {
+        // Write your code here.
+
+        if(S == null || S.length() == 0)
             return N*2;
 
         String[] rseats = S.split(" ");
@@ -40,3 +46,4 @@
         }
 
         return families;
+    }
