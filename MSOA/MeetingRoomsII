@@ -1,0 +1,28 @@
+https://leetcode.com/problems/meeting-rooms-ii/
+Solution:
+
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        
+        if(intervals.length == 1)
+            return 1;
+        
+        Arrays.sort(intervals,(a,b) -> (a[0]-b[0]) );
+        PriorityQueue<Integer> endTime = new PriorityQueue<>();
+        int rooms = 0;
+        
+        for(int[] interval : intervals)
+        {
+            if(!endTime.isEmpty() && endTime.peek() <= interval[0])
+                endTime.remove();
+            endTime.add(interval[1]);
+            rooms = Math.max(rooms,endTime.size());
+        }
+        
+        return rooms;
+        
+    }
+}
+
+Time Complexity: O(NlogN)
+Space Complexity: O(N)
