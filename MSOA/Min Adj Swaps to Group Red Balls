@@ -62,7 +62,7 @@ public static int minSwap(String str) {
             if(str.charAt(left) == 'R' && str.charAt(r) == 'R')
             {
                 redCount-=2;
-                minSwaps = r-left-1-redCount;
+                minSwaps += r-left-1-redCount;
                 left++;
                 r--;
             }
