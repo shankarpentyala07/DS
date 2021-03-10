@@ -12,6 +12,10 @@ https://gist.github.com/hdalali/933101b185aeb604e1d66641c98ad251
 
 https://github.com/neerazz/FAANG/blob/master/Algorithms/Neeraj/topMicrosoftQuestions/MinDeletionsToObtainStringInRightFormat.java
 
+https://seattler.io/forum-11-2.htm?tagids=67_0_0_0
+
+https://algo.monster/problems/microsoft_online_assessment_questions
+
 
 
 
