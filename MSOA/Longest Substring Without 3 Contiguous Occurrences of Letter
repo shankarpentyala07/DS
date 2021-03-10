@@ -20,3 +20,28 @@ public static String maxSubString(String s){
          }
          return s.substring(start,max);
      }
+
+Solution2:
+    public static String longestValidString(String str) {
+        // WRITE YOUR BRILLIANT CODE HERE
+        
+        if(str == null || str.length()< 3)
+            return str;
+        int len = str.length(),sindex=0,ml_sindex=0,ml=2;
+        for(int i=2;i<len;i++)
+        {
+            if(str.charAt(i) != str.charAt(i-1) || str.charAt(i-1) != str.charAt(i-2))
+            {
+                if(maxlen < i-sindex+1)
+                {
+                    maxlen = i-sindex+1;
+                    rsindex = sindex;
+                }
+            }
+            else
+                sindex = i-1;
+            
+        }
+        
+        return str.substring(rsindex,maxlen);
+    }
