@@ -8,4 +8,6 @@ https://molchevskyi.medium.com/best-solutions-for-microsoft-interview-tasks-cae6
 
 https://leetcode.com/discuss/interview-question/547623/Microsoft-Online-Assessment-Questions-Solutions-and-Test-Cases/479791
 
+https://gist.github.com/hdalali/933101b185aeb604e1d66641c98ad251
+
 
