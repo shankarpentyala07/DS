@@ -10,4 +10,8 @@ https://leetcode.com/discuss/interview-question/547623/Microsoft-Online-Assessme
 
 https://gist.github.com/hdalali/933101b185aeb604e1d66641c98ad251
 
+https://github.com/neerazz/FAANG/blob/master/Algorithms/Neeraj/topMicrosoftQuestions/MinDeletionsToObtainStringInRightFormat.java
+
+
+
 
