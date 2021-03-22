@@ -1,0 +1,38 @@
+https://leetcode.com/problems/remove-duplicate-letters/
+
+class Solution {
+    public String removeDuplicateLetters(String s) {
+        if(s.length() == 1)
+            return s;
+        Stack<Character> stack = new Stack<Character>();
+        
+        Set<Character> seen = new HashSet<>();
+        int[] count = new int[26];
+        
+        for(int i=0;i<s.length();i++)
+            count[s.charAt(i)-'a']++;
+        
+        for(int i=0;i<s.length();i++)
+        {
+          
+            if(!seen.contains(s.charAt(i)))
+            {
+                while(!stack.isEmpty() && stack.peek() > s.charAt(i) && count[stack.peek()-'a'] > 0)
+                {
+                   seen.remove(stack.pop());
+                 }
+                 stack.add(s.charAt(i));
+                 seen.add(s.charAt(i));            
+            }
+            count[s.charAt(i)-'a']--;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+    
+        while(!stack.isEmpty())
+        sb.append(stack.pop());
+        
+        return sb.reverse().toString();
+        
+    }
+}
