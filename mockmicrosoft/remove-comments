@@ -1,0 +1,53 @@
+
+https://leetcode.com/problems/remove-comments/
+class Solution {
+    public List<String> removeComments(String[] source) {
+        
+        List<String> res = new ArrayList<>();
+        boolean multilinecomment = false;
+        StringBuilder sb = new StringBuilder();
+        for(int j=0;j<source.length;j++)
+        {
+            String tmp = source[j];
+            
+            boolean linecomment = false;
+            
+            for(int i=0;i<tmp.length();i++)
+            {
+                
+                if(!multilinecomment && tmp.charAt(i) == '/' && i+1 < tmp.length() && tmp.charAt(i+1) == '/')
+                {
+                    linecomment = true;
+                    break;
+                }  
+                 else if( !multilinecomment && tmp.charAt(i) == '/' &&  i+1 < tmp.length() && tmp.charAt(i+1) == '*')
+                {
+                    multilinecomment = true;
+                    i++;
+                }
+                 else  if( multilinecomment && tmp.charAt(i) == '*' &&  i+1 < tmp.length() && tmp.charAt(i+1) == '/')
+                {
+                    multilinecomment = false;
+                    i++;
+                } 
+                else
+                {
+                if(!multilinecomment)
+                    sb.append(tmp.charAt(i));  
+                }
+            }
+            
+            if(!multilinecomment)
+            {
+            if(sb.length() > 0) // Length greater than 0 check to avoid line start with comments /** **/
+                res.add(sb.toString()); 
+                sb.setLength(0);
+            }
+                
+        }
+        
+        return res;
+        
+        
+    }
+}
