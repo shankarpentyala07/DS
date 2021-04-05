@@ -1,0 +1,54 @@
+https://leetcode.com/problems/clone-graph/
+Solution1:
+class Solution {
+    public Node cloneGraph(Node node) {
+        if(node == null)
+            return null;
+        Map<Node, Node> map = new HashMap<>();
+        return clone(node, map);
+    }
+    public Node clone(Node node,  Map<Node, Node> map){
+        if(map.containsKey(node))
+            return map.get(node);
+        Node x = new Node(node.val);
+        map.put(node, x);
+        for(Node n: node.neighbors)
+                x.neighbors.add(clone(n, map));  
+        return x;
+    }      
+    
+}
+
+Time: O(N+M) N = nodes ,M = edges
+Space: O(N)
+
+Solution2:
+class Solution {
+    public Node cloneGraph(Node node) {
+        
+        if (node == null)
+            return node;       
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        Map<Node,Node> org2Clone = new HashMap<>(); 
+         org2Clone.put(node,new Node(node.val));
+        while(!queue.isEmpty())
+        {
+            Node curr = queue.remove();       
+            Node clone = org2Clone.get(curr);        
+            for(Node neighbor : curr.neighbors)
+            {
+                if(!org2Clone.containsKey(neighbor))
+                {
+                    org2Clone.put(neighbor,new Node(neighbor.val));
+                    queue.add(neighbor);
+                }   
+                clone.neighbors.add(org2Clone.get(neighbor));          
+            }
+        }        
+        return org2Clone.get(node);        
+    }
+}
+
+Time: O(N+M) N = nodes ,M = edges
+Space: O(N)
