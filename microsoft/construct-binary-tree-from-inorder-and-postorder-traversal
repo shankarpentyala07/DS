@@ -1,0 +1,26 @@
+class Solution {
+    int postOrderIdx;
+    Map<Integer,Integer> val2Key;
+    
+    public TreeNode buildTree(int[] postorder,int start,int end)
+    {
+        if(start > end)
+            return null;
+        int val = postorder[postOrderIdx--];
+        TreeNode root = new TreeNode(val);
+        
+        root.right = buildTree(postorder,val2Key.get(val)+1,end);
+        root.left = buildTree(postorder,start,val2Key.get(val)-1);
+        
+        return root;
+    }
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        val2Key = new HashMap<>();
+        postOrderIdx = postorder.length-1;
+        for(int i=0;i<inorder.length;i++)
+            val2Key.put(inorder[i],i);        
+        return buildTree(postorder,0,inorder.length-1);     
+    }
+}
+
+Time: O(N)
