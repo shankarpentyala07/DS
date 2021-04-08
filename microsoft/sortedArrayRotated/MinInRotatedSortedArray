@@ -20,3 +20,35 @@ class Solution {
 
 TestCase: [4,5,6,7,0,1,2]
 Time : O(log(n)) Space: O(1)
+
+Solution2:
+class Solution {
+    public int findMin(int[] nums) {
+        
+        /** 1 2 3 5
+        
+         2 3 5 1
+         3 5 1 2
+         5 1 2 3
+         
+         1 2 3 5
+         **/
+        
+        int start=0,end=nums.length-1;
+        
+        while(start < end)
+        {
+            int mid = start + (end-start)/2;
+            if(nums[start] < nums[end])
+                return nums[start];
+            else if(nums[start] <= nums[mid])
+                start = mid+1;
+            else end = mid;
+        }
+        
+        return nums[start];
+        
+    }
+}
+
+Time: O(logn)
