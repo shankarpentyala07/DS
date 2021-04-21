@@ -1,0 +1,22 @@
+April20,2021
+
+Round1:
+Tell me about yourself?
+Tell me about a time when you were 70% through the project and requirements have changed and how you handled it?
+
+Design a mobile app,which tells whether the user current location is covid +ve or -ve
+
+Round2:
+Tell me about a time when the client was not satisified with you
+Maze problem - Given a source and target,Output the optimal path to the target
+
+Round3:
+Tell me about yourself
+You are receiving sensor data ->(sensorId,dataId,byte[] data)
+1.Implement Read/Write methods ,write the data into the database which is having 1000 nodes and unlimited Storage
+2.Implement Read/Write methods ,write the data into the database which is having 1000 nodes and limited Storage
+
+Round4:
+Introduce yourself 
+Design Ticket Booking System
+
