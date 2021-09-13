@@ -1,3 +1,4 @@
+******************************************************************
 DFS:
 ******************************************************************
 1. Letter combinations of a phone number
@@ -14,8 +15,8 @@ d. Smallest Rectangles Enclosing Black Pixels
 
 3. N Queens
 a. Valid Sudoku
-**********************************************************************
 
+**********************************************************************
 DP: https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns
 **********************************************************************
 1.Climbing Stairs
@@ -23,5 +24,12 @@ DP: https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-p
 3.Longest Increasing Subsequence
 4.Word Break
 
+***********************************************************************
+Graph Problems:
+***********************************************************************
+1.No of connected components in an undirected graph
+2.Course Schedule
+3.Possible Bipartition
+4.Minimum Height Tree
 
 
