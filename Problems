@@ -28,7 +28,8 @@ DP: https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-p
 Graph Problems:
 ***********************************************************************
 1.No of connected components in an undirected graph
-2.Course Schedule - (Follow up - Implement using Topolgical Sorting)
+2.Course Schedule - (Follow up - Implement using Topolgical Sorting) 
+    a) Graph Valid Trees
 3.Possible Bipartition
 4.Minimum Height Tree
 
