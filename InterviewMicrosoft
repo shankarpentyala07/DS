@@ -15,6 +15,24 @@ Design a mobile app,which tells whether the user current location is covid +ve o
 Round2:
 Tell me about a time when the client was not satisified with you
 
+- Initially not satisfied,but after optimization later convinced & got +ve feedback
+- Initially passed the soln,the client was upset because he was not able to understand the solution
+- Later prepared docs & a video, which explained clearly
+
+
+- Initally thoght a design,the other team was upset because they need to more many changes on their side
+- Later they were convinced because of the robust & optimal solution
+
+- Example:
+Initially give step by step commands & instructions in a detailed manner for sever preparation
+The client was  upset because they felt instructions are lengthy
+Later prepared a script of the same commands and gave the scrpt,The client was satisifed because they can run with a single command
+
+a) Whats the context
+b) Whats the exact requirements
+c) What are step by step commands
+d) Ansible scripts
+
 
 Tell me about a time when you experienced conflict with a team member.
 - Tech Stack  (Ansible vs Shell Script)
