@@ -17,7 +17,8 @@ d. Smallest Rectangles Enclosing Black Pixels
 a. Valid Sudoku
 
 **********************************************************************
-DP: https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns
+DP:
+https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns
 **********************************************************************
 1.Climbing Stairs
 2.Coin Change
@@ -35,6 +36,7 @@ Graph Problems:
 
 ***********************************************************************
 Sliding Window Problems:
+https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem.
 ***********************************************************************
 1. Minimum Size Subarray Sum
 a) Max consecutive Ones
