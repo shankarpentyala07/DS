@@ -93,3 +93,5 @@ while(len1 > 0 && len2 > 0)
 Overview of concpets:
 Divide & Conquer
 Ex: https://leetcode.com/problems/longest-common-prefix/solution/
+Quick Select:
+https://leetcode.com/problems/k-closest-points-to-origin
